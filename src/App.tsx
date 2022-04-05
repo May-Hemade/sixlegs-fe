@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css"
+
+import { ThemeProvider } from "@emotion/react"
+import { createTheme } from "@mui/material/styles"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+
+import SignUp from "./pages/SignUp"
+import SignIn from "./pages/SignIn"
+import Home from "./pages/Home"
+import WithoutNav from "./components/WithoutNav"
+import WithNav from "./components/WithNav"
+
+const theme = createTheme()
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          <Routes>
+            <Route element={<WithoutNav />}>
+              <Route path="/Signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+            </Route>
+            <Route element={<WithNav />}>
+              <Route path="/" element={<Home />} />
+            </Route>
+          </Routes>
+        </div>
+      </ThemeProvider>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App
