@@ -1,0 +1,6 @@
+.host-listing-container{
+    display: flex;
+    align-items: right !important;
+    padding-top: 3ch;
+    padding-left: 3ch;
+}

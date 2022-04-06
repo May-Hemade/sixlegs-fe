@@ -7,6 +7,8 @@ import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
 
+import { Link as RouterLink } from "react-router-dom"
+
 export default function NavAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -24,7 +26,10 @@ export default function NavAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             News
           </Typography>
-          <Button color="inherit">Login</Button>
+
+          <Button component={RouterLink} to="/profile" color="inherit">
+            Profile
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>

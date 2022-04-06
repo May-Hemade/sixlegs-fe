@@ -9,6 +9,9 @@ import SignIn from "./pages/SignIn"
 import Home from "./pages/Home"
 import WithoutNav from "./components/WithoutNav"
 import WithNav from "./components/WithNav"
+import HostListing from "./pages/HostListing"
+import Profile from "./pages/Profile"
+import Maps from "./pages/Maps"
 
 const theme = createTheme()
 
@@ -24,6 +27,9 @@ function App() {
             </Route>
             <Route element={<WithNav />}>
               <Route path="/" element={<Home />} />
+              <Route path="/Listing" element={<HostListing />} />
+              <Route path="/Profile" element={<Profile />} />
+              <Route path="/maps" element={<Maps />} />
             </Route>
           </Routes>
         </div>

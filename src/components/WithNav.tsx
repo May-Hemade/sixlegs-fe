@@ -1,6 +1,6 @@
 import React from "react"
 import { Outlet } from "react-router-dom"
-import NavAppBar from "../pages/NavAppBar"
+import NavAppBar from "./NavAppBar"
 
 export default () => {
   return (
