@@ -12,6 +12,7 @@ import WithNav from "./components/WithNav"
 import HostListing from "./pages/HostListing"
 import Profile from "./pages/Profile"
 import Maps from "./pages/Maps"
+import PersonalProfile from "./components/PersonalInfo"
 
 const theme = createTheme()
 
@@ -22,14 +23,15 @@ function App() {
         <div className="App">
           <Routes>
             <Route element={<WithoutNav />}>
-              <Route path="/Signin" element={<SignIn />} />
+              <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
             </Route>
             <Route element={<WithNav />}>
               <Route path="/" element={<Home />} />
-              <Route path="/Listing" element={<HostListing />} />
-              <Route path="/Profile" element={<Profile />} />
+              <Route path="/listing" element={<HostListing />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/maps" element={<Maps />} />
+              <Route path="/edit-profile" element={<PersonalProfile />} />
             </Route>
           </Routes>
         </div>
