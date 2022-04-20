@@ -1,36 +1,37 @@
-import React, { useState } from "react"
-import { Button, Form, FormControl } from "react-bootstrap"
-import { GridLoader } from "react-spinners"
-import { css } from "@emotion/react"
+import { ChangeEvent, FormEvent, useState } from "react"
+import { Box, Button, CircularProgress, Input } from "@mui/material"
 
-const UploadImage = ({ url, property, onSuccess }) => {
-  const [selectedImage, setSelectedImage] = useState(null)
+export interface UploadImageProps {
+  url: string
+  property: string
+  onSuccess: () => void
+}
+
+const UploadImage = (props: UploadImageProps) => {
+  const [selectedImage, setSelectedImage] = useState<File | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
-  const loadingStyle = css`
-    display: block;
-    margin: 0 auto;
-    border-color: #70b5f9;
-  `
-  const upload = async (e) => {
+  const upload = async (e: FormEvent) => {
     e.preventDefault()
     const formData = new FormData()
+    if (!selectedImage) {
+      return
+    }
 
-    formData.append(property, selectedImage)
+    formData.append(props.property, selectedImage)
 
     const options = {
       method: "POST",
-
       body: formData,
     }
 
     try {
       setIsLoading(true)
-      const response = await fetch(url, options)
+      const response = await fetch(props.url, options)
       if (response.ok) {
         console.log("image uploaded")
         setIsLoading(false)
-        onSuccess()
+        props.onSuccess()
       } else {
         console.log("image could not be uploaded")
         setIsLoading(false)
@@ -44,12 +45,8 @@ const UploadImage = ({ url, property, onSuccess }) => {
 
   return (
     <div className="linkedin-modal p-4">
-      <GridLoader
-        size={10}
-        loading={isLoading}
-        color="#70b5f9"
-        css={loadingStyle}
-      />
+      {isLoading && <CircularProgress />}
+
       {!isLoading && selectedImage && (
         <div>
           <img
@@ -68,23 +65,34 @@ const UploadImage = ({ url, property, onSuccess }) => {
       )}
 
       {!isLoading && (
-        <Form onSubmit={(e) => upload(e)}>
-          <FormControl
-            className="menu_button_open"
-            type="file"
-            name={property}
-            onChange={(event) => {
-              console.log(event.target.files[0])
-              setSelectedImage(event.target.files[0])
-            }}
-            className="pb-2 mt-3"
-          />
-          <FormControl
-            value="Upload"
+        <Box component="form" onSubmit={(e: FormEvent) => upload(e)}>
+          <label htmlFor="contained-button-file">
+            <Input
+              // accept="image/*"
+              id="contained-button-file"
+              type="file"
+              name={props.property}
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                if (event.target.files) {
+                  console.log(event.target.files[0])
+                  setSelectedImage(event.target.files[0])
+                }
+              }}
+            />
+            <Button variant="contained" component="span">
+              Select Image
+            </Button>
+          </label>
+          <Button
             type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
             disabled={selectedImage === null}
-          />
-        </Form>
+          >
+            Upload
+          </Button>
+        </Box>
       )}
     </div>
   )

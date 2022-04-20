@@ -12,7 +12,8 @@ import WithNav from "./components/WithNav"
 import HostListing from "./pages/HostListing"
 import Profile from "./pages/Profile"
 import Maps from "./pages/Maps"
-import PersonalProfile from "./components/PersonalInfo"
+import EditProfile from "./pages/EditProfile"
+import ChangePassword from "./pages/ChangePassword"
 
 const theme = createTheme()
 
@@ -31,7 +32,8 @@ function App() {
               <Route path="/listing" element={<HostListing />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/maps" element={<Maps />} />
-              <Route path="/edit-profile" element={<PersonalProfile />} />
+              <Route path="/edit-profile" element={<EditProfile />} />
+              <Route path="/change-password" element={<ChangePassword />} />
             </Route>
           </Routes>
         </div>

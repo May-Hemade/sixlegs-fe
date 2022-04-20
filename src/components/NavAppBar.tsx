@@ -24,7 +24,7 @@ export default function NavAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            Six Legs
           </Typography>
 
           <Button component={RouterLink} to="/profile" color="inherit">

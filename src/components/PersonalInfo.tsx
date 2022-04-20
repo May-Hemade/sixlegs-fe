@@ -22,8 +22,6 @@ export default function PersonalProfile() {
             >
               <Avatar
                 className="avatar-profile"
-                alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg"
                 sx={{ width: 100, height: 100 }}
               />
             </ButtonBase>

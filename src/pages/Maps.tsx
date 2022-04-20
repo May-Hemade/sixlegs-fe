@@ -1,15 +1,16 @@
-import { Container } from "@mui/material"
-import React from "react"
+import { Container, Typography } from "@mui/material"
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet"
 
 function Maps() {
   return (
     <div>
+      <Typography>Hello</Typography>
       <Container>
         <MapContainer
           center={[51.505, -0.09]}
           zoom={13}
           scrollWheelZoom={false}
+          style={{ height: "400px", width: "100%" }}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
