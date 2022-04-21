@@ -13,6 +13,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { FaGoogle } from "react-icons/fa"
+import { useDispatch } from "react-redux"
+import { saveTokenAction } from "../redux/actions/userActions"
+import { useAppDispatch } from "../redux/hooks"
 
 function Copyright(props: any) {
   return (
@@ -31,6 +34,7 @@ function Copyright(props: any) {
 
 export default function SignIn() {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
@@ -58,7 +62,8 @@ export default function SignIn() {
       } else {
         let result = await res.json()
 
-        localStorage.setItem("UserToken", result.accessToken)
+        dispatch(saveTokenAction(result.accessToken))
+
         navigate("/")
         console.log("Successfully logged in!")
       }
