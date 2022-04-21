@@ -1,6 +1,6 @@
 import { initialState } from "../store"
 import { AnyAction } from "redux"
-import { SAVE_TOKEN } from "../actions/userActions"
+import { GET_USER, SAVE_TOKEN } from "../actions/userActions"
 
 const userReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
@@ -8,6 +8,12 @@ const userReducer = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         token: action.payload,
+      }
+
+    case GET_USER:
+      return {
+        ...state,
+        profile: action.payload,
       }
     default:
       return state

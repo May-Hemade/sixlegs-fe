@@ -4,8 +4,18 @@ import Typography from "@mui/material/Typography"
 import ButtonBase from "@mui/material/ButtonBase"
 import { Avatar, Container } from "@mui/material"
 import "../pages/profile.css"
+import { useAppSelector } from "../redux/hooks"
+import { useEffect } from "react"
+import { getUserAction } from "../redux/actions/userActions"
+import { useDispatch } from "react-redux"
 
 export default function PersonalProfile() {
+  const userState = useAppSelector((state) => state.user)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getUserAction())
+  }, [])
   return (
     <Container
       component="main"
@@ -37,19 +47,16 @@ export default function PersonalProfile() {
             >
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1" component="div">
-                  Name surname
+                  {`${userState.profile.firstName} ${userState.profile.lastName}`}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  Email@gmai.com
+                  {userState.profile.email}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Number : 1023245556
+                  {userState.profile.gender}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  info Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Cumque magnam suscipit nam accusamus non voluptatibus possimus
-                  odit commodi provident enim! Eligendi iure libero dolore quis
-                  ad aliquid facere, vitae inventore!
+                  {userState.profile.description}
                 </Typography>
               </Grid>
               <Grid item>

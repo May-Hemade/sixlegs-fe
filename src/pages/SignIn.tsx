@@ -15,7 +15,6 @@ import Container from "@mui/material/Container"
 import { FaGoogle } from "react-icons/fa"
 import { useDispatch } from "react-redux"
 import { saveTokenAction } from "../redux/actions/userActions"
-import { useAppDispatch } from "../redux/hooks"
 
 function Copyright(props: any) {
   return (
@@ -34,7 +33,7 @@ function Copyright(props: any) {
 
 export default function SignIn() {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)

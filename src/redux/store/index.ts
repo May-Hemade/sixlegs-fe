@@ -1,12 +1,14 @@
 import { createStore, combineReducers, compose, applyMiddleware } from "redux"
 
-import thunk from "redux-thunk"
+import thunk, { ThunkAction } from "redux-thunk"
 import localStorage from "redux-persist/lib/storage"
 
 import { persistReducer, persistStore } from "redux-persist"
 import { encryptTransform } from "redux-persist-transform-encrypt"
 import homeReducer from "../reducers/homeReducer"
 import userReducer from "../reducers/userReducer"
+
+import { AnyAction } from "redux"
 
 declare global {
   interface Window {
@@ -19,6 +21,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 export const initialState = {
   user: {
     token: "",
+    profile: {},
   },
   home: {
     isLoading: true,
@@ -57,6 +60,12 @@ const configureStore = createStore(
 const persistor = persistStore(configureStore)
 
 export type RootState = ReturnType<typeof configureStore.getState>
-export type AppDispatch = typeof configureStore.dispatch
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  AnyAction
+>
 
 export { configureStore, persistor }
