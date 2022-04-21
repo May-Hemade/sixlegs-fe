@@ -5,13 +5,14 @@ import CssBaseline from "@mui/material/CssBaseline"
 import TextField from "@mui/material/TextField"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import Checkbox from "@mui/material/Checkbox"
-import { Link as RouterLink } from "react-router-dom"
-import { Link } from "@mui/material"
+import { Link as RouterLink, Navigate, useNavigate } from "react-router-dom"
+import { Divider, Link } from "@mui/material"
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
+import { FaGoogle } from "react-icons/fa"
 
 function Copyright(props: any) {
   return (
@@ -29,13 +30,41 @@ function Copyright(props: any) {
 }
 
 export default function SignIn() {
+  const navigate = useNavigate()
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+
+    login({
+      email: data.get("email")?.toString(),
+      password: data.get("password")?.toString(),
     })
+  }
+
+  interface UserLogin {
+    email: string | undefined
+    password: string | undefined
+  }
+
+  const login = async (data: UserLogin) => {
+    try {
+      let res = await fetch(`${process.env.REACT_APP_BE_URL}/user/login`, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-type": "application/json" },
+      })
+      if (!res.ok) {
+        alert("you you entered wrong password or email")
+      } else {
+        let result = await res.json()
+
+        localStorage.setItem("UserToken", result.accessToken)
+        navigate("/")
+        console.log("Successfully logged in!")
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -99,6 +128,21 @@ export default function SignIn() {
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
+          </Grid>
+
+          <Grid md={6}>
+            <Divider sx={{ my: 5 }} />
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              href={`${process.env.REACT_APP_BE_URL}/user/googleLogin`}
+              startIcon={<FaGoogle className="iconssRegister" />}
+            >
+              Continue with Google
+            </Button>
           </Grid>
         </Box>
       </Box>

@@ -6,12 +6,14 @@ import TextField from "@mui/material/TextField"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import Checkbox from "@mui/material/Checkbox"
 import Link from "@mui/material/Link"
-import { Link as RouterLink } from "react-router-dom"
+import { Link as RouterLink, useNavigate } from "react-router-dom"
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
+import { FaGoogle } from "react-icons/fa"
+import { Divider } from "@mui/material"
 
 function Copyright(props: any) {
   return (
@@ -31,13 +33,43 @@ function Copyright(props: any) {
 }
 
 export default function SignUp() {
+  const navigate = useNavigate()
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+    register({
+      firstName: data.get("firstName")?.toString(),
+      lastName: data.get("lastName")?.toString(),
+      email: data.get("email")?.toString(),
+      password: data.get("password")?.toString(),
     })
+  }
+  interface UserRegisteration {
+    firstName: string | undefined
+    lastName: string | undefined
+    email: string | undefined
+    password: string | undefined
+  }
+
+  const register = async (newUser: UserRegisteration) => {
+    console.log(newUser)
+    try {
+      let res = await fetch(`${process.env.REACT_APP_BE_URL}/user/register`, {
+        method: "POST",
+        body: JSON.stringify(newUser),
+        headers: { "Content-type": "application/json" },
+      })
+      if (res.status !== 200) {
+        alert("you you entered wrong password or email")
+      }
+      if (res.ok) {
+        let data = await res.json()
+        console.log("Successfully registered!")
+        navigate("/signin")
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -101,13 +133,8 @@ export default function SignUp() {
                 autoComplete="new-password"
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid>
           </Grid>
+
           <Button
             type="submit"
             fullWidth
@@ -122,6 +149,21 @@ export default function SignUp() {
                 Already have an account? Sign in
               </Link>
             </Grid>
+          </Grid>
+
+          <Grid md={6}>
+            <Divider sx={{ my: 5 }} />
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              href={`${process.env.REACT_APP_BE_URL}/user/googleLogin`}
+              startIcon={<FaGoogle />}
+            >
+              Continue with Google
+            </Button>
           </Grid>
         </Box>
       </Box>
