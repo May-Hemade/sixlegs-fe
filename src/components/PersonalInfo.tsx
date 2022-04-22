@@ -4,19 +4,20 @@ import Typography from "@mui/material/Typography"
 import ButtonBase from "@mui/material/ButtonBase"
 import { Avatar, Container, LinearProgress, Stack } from "@mui/material"
 import "../pages/profile.css"
-import { useAppSelector } from "../redux/hooks"
+import { useAppDispatch, useAppSelector } from "../redux/hooks"
 import { useEffect } from "react"
 import { getUserAction } from "../redux/actions/userActions"
 import { useDispatch } from "react-redux"
 import { Box } from "@mui/system"
 import { Edit } from "@mui/icons-material"
+import { getUser } from "../redux/reducers/userSlice"
 
 export default function PersonalProfile() {
   const userState = useAppSelector((state) => state.user)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(getUserAction())
+    dispatch(getUser())
   }, [])
   return (
     <Container
@@ -32,7 +33,7 @@ export default function PersonalProfile() {
           </Box>
         )}
 
-        {!userState.isLoading && !userState.isError && (
+        {userState.profile && (
           <Box>
             <Box
               sx={{

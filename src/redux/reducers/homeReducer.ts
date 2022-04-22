@@ -1,7 +1,6 @@
-import { initialState } from "../store"
 import { AnyAction } from "redux"
 
-const homeReducer = (state = initialState, action: AnyAction) => {
+const homeReducer = (state = {}, action: AnyAction) => {
   switch (action.type) {
     default:
       return state

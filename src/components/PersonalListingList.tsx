@@ -29,8 +29,8 @@ export default function PersonalListingList() {
           </div>
         </Box>
         <Stack sx={{ p: 3 }} spacing={2}>
-          <PersonalListing />
-          <PersonalListing />
+          {/* <PersonalListing />
+          <PersonalListing /> */}
         </Stack>
       </Paper>
     </Container>
