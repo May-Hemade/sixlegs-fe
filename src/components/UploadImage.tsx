@@ -44,7 +44,7 @@ const UploadImage = (props: UploadImageProps) => {
   }
 
   return (
-    <div className="linkedin-modal p-4">
+    <div className="p-4">
       {isLoading && <CircularProgress />}
 
       {!isLoading && selectedImage && (

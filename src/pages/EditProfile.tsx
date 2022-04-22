@@ -13,8 +13,32 @@ import {
 import { Link as RouterLink } from "react-router-dom"
 import { Container } from "@mui/material"
 import UploadImageDialog from "../components/UploadImageDialog"
+import { useDispatch } from "react-redux"
+import { useAppSelector } from "../redux/hooks"
+import { useEffect } from "react"
+import { getUserAction, postUserAction } from "../redux/actions/userActions"
+import User from "../types/User"
 
 export default function EditProfile() {
+  const userState = useAppSelector((state) => state.user)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getUserAction())
+  }, [])
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const data = new FormData(event.currentTarget)
+    const user: User = {
+      firstName: data.get("firstName")!.toString(),
+      lastName: data.get("lastName")!.toString(),
+      email: data.get("email")!.toString(),
+      description: data.get("description")!.toString(),
+    }
+    dispatch(postUserAction(user))
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -44,19 +68,27 @@ export default function EditProfile() {
         ></UploadImageDialog>
       </Box>
 
-      <Box component="form" sx={{ mt: 2 }} noValidate autoComplete="off">
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{ mt: 2 }}
+        noValidate
+        autoComplete="off"
+      >
         <Stack spacing={2}>
           <TextField
             required
             id="first-name"
-            name="first-name"
+            name="firstName"
             label="First Name"
+            defaultValue={userState.profile.firstName}
           />
           <TextField
             required
             id="last-name"
-            name="last-name"
+            name="lastName"
             label="Last Name"
+            defaultValue={userState.profile.lastName}
           />
           <TextField
             required
@@ -64,13 +96,16 @@ export default function EditProfile() {
             name="email"
             label="Email"
             type="email"
+            defaultValue={userState.profile.email}
           />
           <TextField
             multiline
             minRows={2}
             maxRows={5}
+            name="description"
             label="Description"
             id="fullWidth"
+            defaultValue={userState.profile.description}
           />
         </Stack>
 

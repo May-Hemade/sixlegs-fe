@@ -22,6 +22,10 @@ export const initialState = {
   user: {
     token: "",
     profile: {},
+    isLoading: true,
+    isError: false,
+    isUpdateLoading: true,
+    isUpdateError: false,
   },
   home: {
     isLoading: true,
