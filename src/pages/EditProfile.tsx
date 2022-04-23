@@ -14,17 +14,18 @@ import { Link as RouterLink } from "react-router-dom"
 import { Container } from "@mui/material"
 import UploadImageDialog from "../components/UploadImageDialog"
 import { useDispatch } from "react-redux"
-import { useAppSelector } from "../redux/hooks"
+import { useAppDispatch, useAppSelector } from "../redux/hooks"
 import { useEffect } from "react"
 import { getUserAction, postUserAction } from "../redux/actions/userActions"
 import User from "../types/User"
+import { getUser, updateUser } from "../redux/reducers/userSlice"
 
 export default function EditProfile() {
   const userState = useAppSelector((state) => state.user)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(getUserAction())
+    dispatch(getUser())
   }, [])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -36,7 +37,7 @@ export default function EditProfile() {
       email: data.get("email")!.toString(),
       description: data.get("description")!.toString(),
     }
-    dispatch(postUserAction(user))
+    dispatch(updateUser(user))
   }
 
   return (
@@ -81,14 +82,14 @@ export default function EditProfile() {
             id="first-name"
             name="firstName"
             label="First Name"
-            defaultValue={userState.profile.firstName}
+            defaultValue={userState.profile?.firstName}
           />
           <TextField
             required
             id="last-name"
             name="lastName"
             label="Last Name"
-            defaultValue={userState.profile.lastName}
+            defaultValue={userState.profile?.lastName}
           />
           <TextField
             required
@@ -96,7 +97,7 @@ export default function EditProfile() {
             name="email"
             label="Email"
             type="email"
-            defaultValue={userState.profile.email}
+            defaultValue={userState.profile?.email}
           />
           <TextField
             multiline
@@ -105,7 +106,7 @@ export default function EditProfile() {
             name="description"
             label="Description"
             id="fullWidth"
-            defaultValue={userState.profile.description}
+            defaultValue={userState.profile?.description}
           />
         </Stack>
 

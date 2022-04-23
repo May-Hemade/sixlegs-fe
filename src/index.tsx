@@ -6,13 +6,13 @@ import reportWebVitals from "./reportWebVitals"
 
 import { Provider } from "react-redux"
 
-import { configureStore, persistor } from "./redux/store"
+import { store, persistor } from "./redux/store"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { PersistGate } from "redux-persist/integration/react"
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={configureStore}>
+    <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <App />
       </PersistGate>

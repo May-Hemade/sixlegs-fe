@@ -7,10 +7,15 @@ import { Stack } from "@mui/material"
 import "../pages/profile.css"
 import Box from "@mui/material/Box"
 import { Edit } from "@mui/icons-material"
+import Listing from "../types/Listing"
 
 const label = { inputProps: { "aria-label": "Switch demo" } }
 
-export default function PersonalListing() {
+interface PersonalListingProps {
+  listing: Listing
+}
+
+export default function PersonalListing(props: PersonalListingProps) {
   return (
     <Paper elevation={2} sx={{ p: 3 }}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>

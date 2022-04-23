@@ -5,7 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline"
 import TextField from "@mui/material/TextField"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import Checkbox from "@mui/material/Checkbox"
-import { Link as RouterLink, Navigate, useNavigate } from "react-router-dom"
+import { Link as RouterLink, useNavigate } from "react-router-dom"
 import { Divider, Link } from "@mui/material"
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
@@ -13,8 +13,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { FaGoogle } from "react-icons/fa"
-import { useDispatch } from "react-redux"
-import { saveTokenAction } from "../redux/actions/userActions"
+import { useAppDispatch } from "../redux/hooks"
+import { saveToken } from "../redux/reducers/userSlice"
 
 function Copyright(props: any) {
   return (
@@ -33,7 +33,7 @@ function Copyright(props: any) {
 
 export default function SignIn() {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
@@ -61,7 +61,7 @@ export default function SignIn() {
       } else {
         let result = await res.json()
 
-        dispatch(saveTokenAction(result.accessToken))
+        dispatch(saveToken(result.accessToken))
 
         navigate("/")
         console.log("Successfully logged in!")

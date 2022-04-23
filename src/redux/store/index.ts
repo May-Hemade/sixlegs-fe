@@ -1,37 +1,24 @@
-import { createStore, combineReducers, compose, applyMiddleware } from "redux"
-
-import thunk, { ThunkAction } from "redux-thunk"
+import { ThunkAction } from "redux-thunk"
 import localStorage from "redux-persist/lib/storage"
 
-import { persistReducer, persistStore } from "redux-persist"
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from "redux-persist"
 import { encryptTransform } from "redux-persist-transform-encrypt"
+
 import homeReducer from "../reducers/homeReducer"
-import userReducer from "../reducers/userReducer"
+
+import userReducer from "../reducers/userSlice"
 
 import { AnyAction } from "redux"
-
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose
-  }
-}
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
-export const initialState = {
-  user: {
-    token: "",
-    profile: {},
-    isLoading: true,
-    isError: false,
-    isUpdateLoading: true,
-    isUpdateError: false,
-  },
-  home: {
-    isLoading: true,
-    isError: false,
-  },
-}
+import { configureStore, combineReducers } from "@reduxjs/toolkit"
 
 const encryptSecretKey = process.env.REACT_APP_SECRET_PERSIST_KEY
 if (!encryptSecretKey) {
@@ -55,15 +42,21 @@ const bigReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, bigReducer)
 
-const configureStore = createStore(
-  persistedReducer,
-  initialState,
-  composeEnhancers(applyMiddleware(thunk))
-)
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+  devTools: process.env.NODE_ENV !== "production",
+})
 
-const persistor = persistStore(configureStore)
+const persistor = persistStore(store)
 
-export type RootState = ReturnType<typeof configureStore.getState>
+export type RootState = ReturnType<typeof bigReducer>
+export type AppDispatch = typeof store.dispatch
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -72,4 +65,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   AnyAction
 >
 
-export { configureStore, persistor }
+export { store, persistor }
