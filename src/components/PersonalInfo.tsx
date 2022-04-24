@@ -6,8 +6,6 @@ import { Avatar, Container, LinearProgress, Stack } from "@mui/material"
 import "../pages/profile.css"
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
 import { useEffect } from "react"
-import { getUserAction } from "../redux/actions/userActions"
-import { useDispatch } from "react-redux"
 import { Box } from "@mui/system"
 import { Edit } from "@mui/icons-material"
 import { getUser } from "../redux/reducers/userSlice"
@@ -39,7 +37,6 @@ export default function PersonalProfile() {
               sx={{
                 justifyContent: "space-between",
                 display: "flex",
-                m: 3,
                 p: 3,
               }}
             >

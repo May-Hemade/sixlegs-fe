@@ -5,4 +5,6 @@ export default interface Listing {
   latitude: number
   address: string | null
   description: string | null
+  listingName: string
+  pricePerNight: number
 }

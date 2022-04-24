@@ -16,11 +16,19 @@ interface PersonalListingProps {
 }
 
 export default function PersonalListing(props: PersonalListingProps) {
+  const pricing = (listing: Listing) => {
+    if (listing.pricePerNight === 0) {
+      return "FREE"
+    } else {
+      return `${listing.pricePerNight} $/night`
+    }
+  }
+
   return (
     <Paper elevation={2} sx={{ p: 3 }}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography component="span" variant="h5">
-          Tsvetna Gradina
+          {props.listing.listingName}
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Edit />
@@ -32,28 +40,21 @@ export default function PersonalListing(props: PersonalListingProps) {
           <Typography variant="overline" gutterBottom>
             Address
           </Typography>
-          <Typography variant="body1">
-            Tsvetna Gradina 47, Lozenets, Sofia 1421
-          </Typography>
+          <Typography variant="body1">{props.listing.address}</Typography>
         </div>
 
         <div>
           <Typography variant="overline" gutterBottom>
             Price
           </Typography>
-          <Typography variant="body1">Free</Typography>
+          <Typography variant="body1">{pricing(props.listing)}</Typography>
         </div>
 
         <div>
           <Typography variant="overline" gutterBottom>
             Description
           </Typography>
-          <Typography variant="body1">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-            sapiente doloremque facilis! Cumque, expedita beatae laboriosam
-            voluptates velit possimus nihil, harum perferendis nulla error
-            distinctio cum facilis eaque earum dolor.
-          </Typography>
+          <Typography variant="body1">{props.listing.description}</Typography>
         </div>
       </Stack>
     </Paper>

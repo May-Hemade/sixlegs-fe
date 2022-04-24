@@ -27,9 +27,7 @@ export default function PetListing() {
       sx={{ mx: "200px" }}
     >
       <Paper elevation={3}>
-        <Box
-          sx={{ justifyContent: "space-between", display: "flex", m: 3, p: 3 }}
-        >
+        <Box sx={{ justifyContent: "space-between", display: "flex", p: 3 }}>
           <Typography component="span" variant="h5">
             My Pets
           </Typography>

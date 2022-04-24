@@ -16,8 +16,8 @@ import { encryptTransform } from "redux-persist-transform-encrypt"
 import homeReducer from "../reducers/homeReducer"
 
 import userReducer from "../reducers/userSlice"
+import listingReducer from "../reducers/listingSlice"
 
-import { AnyAction } from "redux"
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
 
 const encryptSecretKey = process.env.REACT_APP_SECRET_PERSIST_KEY
@@ -38,6 +38,7 @@ const persistConfig = {
 const bigReducer = combineReducers({
   user: userReducer,
   home: homeReducer,
+  listing: listingReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, bigReducer)
@@ -50,19 +51,12 @@ const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-  devTools: process.env.NODE_ENV !== "production",
+  devTools: process.env.REACT_APP_NODE_ENV !== "production",
 })
 
 const persistor = persistStore(store)
 
 export type RootState = ReturnType<typeof bigReducer>
 export type AppDispatch = typeof store.dispatch
-
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  AnyAction
->
 
 export { store, persistor }

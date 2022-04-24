@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import ChangePasswordData from "../../types/ChangePasswordData"
 import User from "../../types/User"
 import { RootState } from "../store"
 
@@ -9,6 +10,8 @@ export interface UserState {
   isError: boolean
   isUpdateLoading: boolean
   isUpdateError: boolean
+  isChangePasswordError: boolean
+  isChangePasswordLoading: boolean
 }
 
 const initialState: UserState = {
@@ -16,8 +19,10 @@ const initialState: UserState = {
   profile: undefined,
   isLoading: true,
   isError: false,
-  isUpdateLoading: true,
+  isUpdateLoading: false,
   isUpdateError: false,
+  isChangePasswordError: false,
+  isChangePasswordLoading: false,
 }
 
 export const getUser = createAsyncThunk<User, void, { state: RootState }>(
@@ -67,6 +72,34 @@ export const updateUser = createAsyncThunk<User, User, { state: RootState }>(
   }
 )
 
+export const changePassword = createAsyncThunk<
+  void,
+  ChangePasswordData,
+  { state: RootState }
+>("user/changePassword", async (data, { getState, rejectWithValue }) => {
+  try {
+    let response = await fetch(
+      `${process.env.REACT_APP_BE_URL}/user/me/changePassword`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${getState().user.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
+    if (response.ok) {
+      return
+    } else {
+      return rejectWithValue("error happened updating the user")
+    }
+  } catch (error) {
+    console.log(error)
+    return rejectWithValue(error)
+  }
+})
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -91,6 +124,10 @@ export const userSlice = createSlice({
       state.isError = true
       state.isLoading = false
     })
+    builder.addCase(updateUser.pending, (state, action) => {
+      state.isUpdateError = false
+      state.isUpdateLoading = true
+    })
     builder.addCase(updateUser.fulfilled, (state, action) => {
       state.profile = action.payload
       state.isUpdateError = false
@@ -99,6 +136,18 @@ export const userSlice = createSlice({
     builder.addCase(updateUser.rejected, (state, action) => {
       state.isUpdateError = true
       state.isUpdateLoading = false
+    })
+    builder.addCase(changePassword.pending, (state, action) => {
+      state.isChangePasswordError = false
+      state.isChangePasswordLoading = true
+    })
+    builder.addCase(changePassword.fulfilled, (state, action) => {
+      state.isChangePasswordError = false
+      state.isChangePasswordLoading = false
+    })
+    builder.addCase(changePassword.rejected, (state, action) => {
+      state.isChangePasswordError = true
+      state.isChangePasswordLoading = false
     })
   },
 })
