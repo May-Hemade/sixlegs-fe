@@ -14,6 +14,7 @@ import Profile from "./pages/Profile"
 import Maps from "./pages/Maps"
 import EditProfile from "./pages/EditProfile"
 import ChangePassword from "./pages/ChangePassword"
+import EditListing from "./pages/EditListing"
 
 const theme = createTheme()
 
@@ -31,8 +32,11 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/listing" element={<HostListing />} />
               <Route path="/profile" element={<Profile />} />
+
               <Route path="/maps" element={<Maps />} />
               <Route path="/edit-profile" element={<EditProfile />} />
+              <Route path="/edit-listing/:id" element={<EditListing />} />
+              <Route path="/add-listing" element={<EditListing />} />
               <Route path="/change-password" element={<ChangePassword />} />
             </Route>
           </Routes>

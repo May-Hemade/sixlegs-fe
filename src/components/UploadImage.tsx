@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react"
 import { Box, Button, CircularProgress, Input } from "@mui/material"
+import { useAppSelector } from "../redux/hooks"
 
 export interface UploadImageProps {
   url: string
@@ -10,6 +11,7 @@ export interface UploadImageProps {
 const UploadImage = (props: UploadImageProps) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const userState = useAppSelector((state) => state.user)
 
   const upload = async (e: FormEvent) => {
     e.preventDefault()
@@ -23,6 +25,9 @@ const UploadImage = (props: UploadImageProps) => {
     const options = {
       method: "POST",
       body: formData,
+      headers: {
+        Authorization: `Bearer ${userState.token}`,
+      },
     }
 
     try {
@@ -44,7 +49,7 @@ const UploadImage = (props: UploadImageProps) => {
   }
 
   return (
-    <div className="p-4">
+    <div className="linkedin-modal p-4">
       {isLoading && <CircularProgress />}
 
       {!isLoading && selectedImage && (
@@ -79,7 +84,7 @@ const UploadImage = (props: UploadImageProps) => {
                 }
               }}
             />
-            <Button variant="contained" component="span">
+            <Button variant="contained" component="span" sx={{ m: 3 }}>
               Select Image
             </Button>
           </label>

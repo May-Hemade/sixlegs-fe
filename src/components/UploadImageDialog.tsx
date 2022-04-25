@@ -19,16 +19,14 @@ export default function UploadImageDialog(props: UploadImageProps) {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Change Image
-      </Button>
+      <Button onClick={handleClickOpen}>Change Image</Button>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Upload Image"}</DialogTitle>
+        <DialogTitle>{"Upload Image"}</DialogTitle>
         <DialogContent>
           <UploadImage {...props}></UploadImage>
         </DialogContent>

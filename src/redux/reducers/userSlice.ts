@@ -12,6 +12,7 @@ export interface UserState {
   isUpdateError: boolean
   isChangePasswordError: boolean
   isChangePasswordLoading: boolean
+  isChangePasswordSuccessSnackBarOpen: boolean
 }
 
 const initialState: UserState = {
@@ -23,6 +24,7 @@ const initialState: UserState = {
   isUpdateError: false,
   isChangePasswordError: false,
   isChangePasswordLoading: false,
+  isChangePasswordSuccessSnackBarOpen: false,
 }
 
 export const getUser = createAsyncThunk<User, void, { state: RootState }>(
@@ -66,7 +68,6 @@ export const updateUser = createAsyncThunk<User, User, { state: RootState }>(
         return rejectWithValue("error happened updating the user")
       }
     } catch (error) {
-      console.log(error)
       return rejectWithValue(error)
     }
   }
@@ -95,7 +96,6 @@ export const changePassword = createAsyncThunk<
       return rejectWithValue("error happened updating the user")
     }
   } catch (error) {
-    console.log(error)
     return rejectWithValue(error)
   }
 })
@@ -112,6 +112,9 @@ export const userSlice = createSlice({
     },
     stopUpdateUserLoading: (state) => {
       state.isUpdateLoading = false
+    },
+    closeChangePasswordSuccess: (state) => {
+      state.isChangePasswordSuccessSnackBarOpen = false
     },
   },
   extraReducers: (builder) => {
@@ -144,6 +147,7 @@ export const userSlice = createSlice({
     builder.addCase(changePassword.fulfilled, (state, action) => {
       state.isChangePasswordError = false
       state.isChangePasswordLoading = false
+      state.isChangePasswordSuccessSnackBarOpen = true
     })
     builder.addCase(changePassword.rejected, (state, action) => {
       state.isChangePasswordError = true
@@ -152,7 +156,11 @@ export const userSlice = createSlice({
   },
 })
 
-export const { saveToken, setUpdateUserError, stopUpdateUserLoading } =
-  userSlice.actions
+export const {
+  saveToken,
+  setUpdateUserError,
+  stopUpdateUserLoading,
+  closeChangePasswordSuccess,
+} = userSlice.actions
 
 export default userSlice.reducer

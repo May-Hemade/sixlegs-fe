@@ -6,8 +6,13 @@ import Switch from "@mui/material/Switch"
 import { Stack } from "@mui/material"
 import "../pages/profile.css"
 import Box from "@mui/material/Box"
-import { Edit } from "@mui/icons-material"
+
 import Listing from "../types/Listing"
+import { Divider, Link } from "@mui/material"
+
+import { Add, Edit } from "@mui/icons-material"
+
+import { Link as RouterLink, useNavigate } from "react-router-dom"
 
 const label = { inputProps: { "aria-label": "Switch demo" } }
 
@@ -31,7 +36,13 @@ export default function PersonalListing(props: PersonalListingProps) {
           {props.listing.listingName}
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Edit />
+          <Link
+            component={RouterLink}
+            to={`/edit-listing/${props.listing.id}`}
+            variant="body2"
+          >
+            <Edit />
+          </Link>
           <Switch {...label} defaultChecked />
         </Box>
       </Box>

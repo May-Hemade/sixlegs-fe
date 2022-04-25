@@ -25,7 +25,7 @@ export default function EditProfile() {
 
   useEffect(() => {
     dispatch(getUser())
-  }, [])
+  }, [userState.profile])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -59,11 +59,15 @@ export default function EditProfile() {
           sx={{ width: 100, height: 100, m: 4 }}
           className="avatar-profile"
         >
-          <Avatar className="avatar-profile" sx={{ width: 100, height: 100 }} />
+          <Avatar
+            className="avatar-profile"
+            sx={{ width: 100, height: 100 }}
+            src={userState.profile?.avatar}
+          />
         </ButtonBase>
         <UploadImageDialog
-          url=""
-          property=""
+          url={`${process.env.REACT_APP_BE_URL}/user/me/avatar`}
+          property="userAvatar"
           onSuccess={() => {}}
         ></UploadImageDialog>
       </Box>

@@ -1,4 +1,3 @@
-import * as React from "react"
 import { styled } from "@mui/material/styles"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
@@ -6,17 +5,9 @@ import Typography from "@mui/material/Typography"
 
 import { Avatar, ButtonBase, Container, Stack } from "@mui/material"
 import "../pages/profile.css"
-import Box, { BoxProps } from "@mui/material/Box"
+import Box from "@mui/material/Box"
 
-import { deepOrange, green, pink } from "@mui/material/colors"
 import { Add } from "@mui/icons-material"
-
-const Img = styled("img")({
-  margin: "auto",
-  display: "block",
-  maxWidth: "100%",
-  maxHeight: "100%",
-})
 
 export default function PetListing() {
   return (

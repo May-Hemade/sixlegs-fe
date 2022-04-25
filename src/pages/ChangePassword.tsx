@@ -1,14 +1,19 @@
 import Box from "@mui/material/Box"
 import TextField from "@mui/material/TextField"
-import { Button, CssBaseline, Snackbar, Stack, Typography } from "@mui/material"
+import { Button, CssBaseline, Stack, Typography } from "@mui/material"
 import { Container } from "@mui/material"
-import { useAppDispatch } from "../redux/hooks"
-import { changePassword } from "../redux/reducers/userSlice"
+import { useAppDispatch, useAppSelector } from "../redux/hooks"
+import {
+  changePassword,
+  closeChangePasswordSuccess,
+} from "../redux/reducers/userSlice"
 import ChangePasswordData from "../types/ChangePasswordData"
 import { useState } from "react"
+import AppSnackbar from "../components/AppSnackbar"
 
 export default function ChangePassword() {
   const dispatch = useAppDispatch()
+  const userState = useAppSelector((state) => state.user)
   const [snackbarOpen, setSnackbarOpen] = useState(false)
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -32,17 +37,22 @@ export default function ChangePassword() {
     dispatch(changePassword(changePasswordData))
   }
 
-  const handleCloseSnackbar = () => setSnackbarOpen(false)
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
 
-      <Snackbar
+      <AppSnackbar
         open={snackbarOpen}
-        autoHideDuration={2000}
-        onClose={handleCloseSnackbar}
+        onClose={() => setSnackbarOpen(false)}
+        severity="error"
         message="Passwords don't match"
+      />
+
+      <AppSnackbar
+        open={userState.isChangePasswordSuccessSnackBarOpen}
+        onClose={() => dispatch(closeChangePasswordSuccess())}
+        severity="success"
+        message="Password changed 😊"
       />
 
       <Box

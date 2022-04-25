@@ -4,124 +4,151 @@ import {
   Avatar,
   Button,
   ButtonBase,
+  CircularProgress,
   CssBaseline,
+  LinearProgress,
   Link,
   Stack,
   Typography,
 } from "@mui/material"
 
-import { Link as RouterLink } from "react-router-dom"
+import { Link as RouterLink, useParams } from "react-router-dom"
 import { Container } from "@mui/material"
 import UploadImageDialog from "../components/UploadImageDialog"
-import { useDispatch } from "react-redux"
+
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
 import { useEffect } from "react"
-import User from "../types/User"
-import { getUser, updateUser } from "../redux/reducers/userSlice"
 
-export default function EditProfile() {
-  const userState = useAppSelector((state) => state.user)
+import {
+  addListing,
+  getListingsById,
+  updateListingById,
+} from "../redux/reducers/listingSlice"
+import Listing from "../types/Listing"
+import { display } from "@mui/system"
+
+export default function EditListing() {
+  const listingState = useAppSelector((state) => state.listing)
   const dispatch = useAppDispatch()
+  const params = useParams()
 
   useEffect(() => {
-    dispatch(getUser())
+    if (params.id) {
+      const listingId = parseInt(params.id)
+      dispatch(getListingsById(listingId))
+    }
   }, [])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    const user: User = {
-      firstName: data.get("firstName")!.toString(),
-      lastName: data.get("lastName")!.toString(),
-      email: data.get("email")!.toString(),
+    const listing: Listing = {
+      id: listingState.listingById?.id,
+      address: data.get("address")!.toString(),
+      pricePerNight: parseFloat(data.get("pricePerNight")!.toString()),
+      listingName: data.get("listingName")!.toString(),
       description: data.get("description")!.toString(),
     }
-    dispatch(updateUser(user))
+
+    if (!params.id) {
+      dispatch(addListing(listing))
+    } else {
+      dispatch(updateListingById(listing))
+    }
   }
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
 
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Edit Profile
-        </Typography>
+      {listingState.isGetByIdLoading && (
+        <Box sx={{ p: 5, display: "flex", justifyContent: "center" }}>
+          <CircularProgress color="secondary" />
+        </Box>
+      )}
 
-        <ButtonBase
-          sx={{ width: 100, height: 100, m: 4 }}
-          className="avatar-profile"
-        >
-          <Avatar className="avatar-profile" sx={{ width: 100, height: 100 }} />
-        </ButtonBase>
-        <UploadImageDialog
-          url=""
-          property=""
-          onSuccess={() => {}}
-        ></UploadImageDialog>
-      </Box>
+      {!listingState.isGetByIdLoading && !listingState.isGetByIdError && (
+        <Box>
+          <Box
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Typography component="h1" variant="h5">
+              Edit Listing
+            </Typography>
 
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        sx={{ mt: 2 }}
-        noValidate
-        autoComplete="off"
-      >
-        <Stack spacing={2}>
-          <TextField
-            required
-            id="first-name"
-            name="firstName"
-            label="First Name"
-            defaultValue={userState.profile?.firstName}
-          />
-          <TextField
-            required
-            id="last-name"
-            name="lastName"
-            label="Last Name"
-            defaultValue={userState.profile?.lastName}
-          />
-          <TextField
-            required
-            id="email"
-            name="email"
-            label="Email"
-            type="email"
-            defaultValue={userState.profile?.email}
-          />
-          <TextField
-            multiline
-            minRows={2}
-            maxRows={5}
-            name="description"
-            label="Description"
-            id="fullWidth"
-            defaultValue={userState.profile?.description}
-          />
-        </Stack>
+            <ButtonBase
+              sx={{ width: 100, height: 100, m: 4 }}
+              className="avatar-profile"
+            >
+              <Avatar
+                className="avatar-profile"
+                sx={{ width: 100, height: 100 }}
+              />
+            </ButtonBase>
+            <UploadImageDialog
+              url=""
+              property=""
+              onSuccess={() => {}}
+            ></UploadImageDialog>
+          </Box>
 
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
-          Submit
-        </Button>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{ mt: 2 }}
+            noValidate
+            autoComplete="off"
+          >
+            <Stack spacing={2}>
+              <TextField
+                required
+                id="listingName"
+                name="listingName"
+                label="Listing Name"
+                defaultValue={listingState.listingById?.listingName}
+              />
+              <TextField
+                required
+                id="address"
+                name="address"
+                label="Address"
+                defaultValue={listingState.listingById?.address}
+              />
+              <TextField
+                required
+                id="Price Per Night"
+                name="pricePerNight"
+                label="pricePerNight"
+                type="number"
+                defaultValue={listingState.listingById?.pricePerNight}
+              />
+              <TextField
+                multiline
+                minRows={2}
+                maxRows={5}
+                name="description"
+                label="Description"
+                id="fullWidth"
+                defaultValue={listingState.listingById?.description}
+              />
+            </Stack>
 
-        <Link component={RouterLink} to="/change-password" variant="body2">
-          Change Password
-        </Link>
-      </Box>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Submit
+            </Button>
+          </Box>
+        </Box>
+      )}
     </Container>
   )
 }

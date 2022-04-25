@@ -7,8 +7,13 @@ import "../pages/profile.css"
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
 import { useEffect } from "react"
 import { Box } from "@mui/system"
-import { Edit } from "@mui/icons-material"
+
 import { getUser } from "../redux/reducers/userSlice"
+import { Link } from "@mui/material"
+
+import { Edit } from "@mui/icons-material"
+
+import { Link as RouterLink, useNavigate } from "react-router-dom"
 
 export default function PersonalProfile() {
   const userState = useAppSelector((state) => state.user)
@@ -43,7 +48,9 @@ export default function PersonalProfile() {
               <Typography component="span" variant="h5">
                 Profile
               </Typography>
-              <Edit />
+              <Link component={RouterLink} to="/edit-profile" variant="body2">
+                <Edit />
+              </Link>
             </Box>
 
             <Grid container spacing={2} sx={{ p: 4 }}>
