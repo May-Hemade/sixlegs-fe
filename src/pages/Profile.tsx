@@ -4,15 +4,15 @@ import "./profile.css"
 
 import PersonalProfile from "../components/PersonalInfo"
 
-import PetListing from "../components/PetList"
-import PersonalListingList from "../components/PersonalListingList"
+import PetListing from "../components/MyPets"
+import MyListings from "../components/MyListings"
 
 export default function Profile() {
   return (
     <div>
       <PersonalProfile></PersonalProfile>
       <PetListing></PetListing>
-      <PersonalListingList></PersonalListingList>
+      <MyListings></MyListings>
     </div>
   )
 }

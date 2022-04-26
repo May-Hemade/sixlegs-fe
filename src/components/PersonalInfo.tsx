@@ -23,12 +23,7 @@ export default function PersonalProfile() {
     dispatch(getUser())
   }, [])
   return (
-    <Container
-      component="main"
-      maxWidth="md"
-      className="profile-container"
-      sx={{ mx: "200px" }}
-    >
+    <Container component="main" maxWidth="md" className="profile-container">
       <Paper elevation={3}>
         {userState.isLoading && (
           <Box sx={{ p: 4 }}>
@@ -61,7 +56,8 @@ export default function PersonalProfile() {
                 >
                   <Avatar
                     className="avatar-profile"
-                    sx={{ width: 100, height: 100 }}
+                    sx={{ width: 100, height: 100, mb: 4 }}
+                    src={userState.profile.avatar}
                   />
                 </ButtonBase>
               </Grid>

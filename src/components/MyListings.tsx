@@ -1,19 +1,18 @@
-import { styled } from "@mui/material/styles"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
-import { Divider, Link } from "@mui/material"
+import { Link } from "@mui/material"
 import { Container, LinearProgress, Stack } from "@mui/material"
 import "../pages/profile.css"
 import Box from "@mui/material/Box"
-import { Add, Edit } from "@mui/icons-material"
+import { Add } from "@mui/icons-material"
 import PersonalListing from "./PersonalListing"
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
 import { useEffect } from "react"
 import { getMyListings } from "../redux/reducers/listingSlice"
 
-import { Link as RouterLink, useNavigate } from "react-router-dom"
+import { Link as RouterLink } from "react-router-dom"
 
-export default function PersonalListingList() {
+export default function MyListings() {
   const listingState = useAppSelector((state) => state.listing)
   console.log(listingState.myListings)
 
@@ -22,12 +21,7 @@ export default function PersonalListingList() {
     dispatch(getMyListings())
   }, [])
   return (
-    <Container
-      component="main"
-      maxWidth="md"
-      className="profile-container"
-      sx={{ mx: "200px" }}
-    >
+    <Container component="main" maxWidth="md" className="profile-container">
       <Paper elevation={3}>
         <Box
           sx={{

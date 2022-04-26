@@ -25,7 +25,7 @@ export default function EditProfile() {
 
   useEffect(() => {
     dispatch(getUser())
-  }, [userState.profile])
+  }, [userState.profile?.avatar])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()

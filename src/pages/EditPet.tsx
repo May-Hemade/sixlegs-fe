@@ -98,8 +98,8 @@ export default function EditPet() {
               />
             </ButtonBase>
             <UploadImageDialog
-              url=""
-              property=""
+              url={`${process.env.REACT_APP_BE_URL}/pet/${petState.petById?.id}/avatar`}
+              property="petAvatar"
               onSuccess={() => {}}
             ></UploadImageDialog>
           </Box>

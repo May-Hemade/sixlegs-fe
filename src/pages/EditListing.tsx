@@ -6,8 +6,6 @@ import {
   ButtonBase,
   CircularProgress,
   CssBaseline,
-  LinearProgress,
-  Link,
   Stack,
   Typography,
 } from "@mui/material"
@@ -25,7 +23,6 @@ import {
   updateListingById,
 } from "../redux/reducers/listingSlice"
 import Listing from "../types/Listing"
-import { display } from "@mui/system"
 
 export default function EditListing() {
   const listingState = useAppSelector((state) => state.listing)

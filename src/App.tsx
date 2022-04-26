@@ -33,13 +33,13 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/listing" element={<HostListing />} />
               <Route path="/profile" element={<Profile />} />
-
               <Route path="/maps" element={<Maps />} />
               <Route path="/edit-profile" element={<EditProfile />} />
               <Route path="/edit-listing/:id" element={<EditListing />} />
               <Route path="/add-listing" element={<EditListing />} />
               <Route path="/change-password" element={<ChangePassword />} />
-              <Route path="/edit-pet" element={<EditPet />} />
+              <Route path="/edit-pet/:id" element={<EditPet />} />
+              <Route path="/add-pet" element={<EditPet />} />
             </Route>
           </Routes>
         </div>

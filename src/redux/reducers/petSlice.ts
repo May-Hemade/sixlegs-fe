@@ -153,7 +153,7 @@ export const petSlice = createSlice({
       state.isGetLoading = true
     })
     builder.addCase(getMyPets.fulfilled, (state, action) => {
-      state.myPets = action.payload
+      state.myPets = action.payload.sort((a, b) => a.id! - b.id!)
       state.isGetError = false
       state.isGetLoading = false
     })

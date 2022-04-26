@@ -174,7 +174,6 @@ export const listingSlice = createSlice({
       state.isGetError = true
       state.isGetLoading = false
     })
-
     builder.addCase(getListingsById.pending, (state) => {
       state.isGetByIdLoading = true
       state.isGetByIdError = false
