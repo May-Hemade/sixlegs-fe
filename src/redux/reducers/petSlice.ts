@@ -74,7 +74,6 @@ export const updatePetById = createAsyncThunk<Pet, Pet, { state: RootState }>(
       )
       if (response.ok) {
         let result = await response.json()
-        console.log(result)
         return result
       } else {
         return rejectWithValue("Couldn't update your pet")
@@ -133,7 +132,11 @@ export const getPetById = createAsyncThunk<Pet, number, { state: RootState }>(
 export const petSlice = createSlice({
   name: "pet",
   initialState,
-  reducers: {},
+  reducers: {
+    setPetById: (state, action: PayloadAction<Pet>) => {
+      state.petById = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(addPet.pending, (state) => {
       state.isAddError = false
@@ -191,5 +194,7 @@ export const petSlice = createSlice({
     })
   },
 })
+
+export const { setPetById } = petSlice.actions
 
 export default petSlice.reducer

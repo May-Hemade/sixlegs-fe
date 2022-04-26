@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux"
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
 import { useEffect } from "react"
 import User from "../types/User"
-import { getUser, updateUser } from "../redux/reducers/userSlice"
+import { getUser, setProfile, updateUser } from "../redux/reducers/userSlice"
 
 export default function EditProfile() {
   const userState = useAppSelector((state) => state.user)
@@ -68,7 +68,9 @@ export default function EditProfile() {
         <UploadImageDialog
           url={`${process.env.REACT_APP_BE_URL}/user/me/avatar`}
           property="userAvatar"
-          onSuccess={() => {}}
+          onSuccess={(profile) => {
+            dispatch(setProfile(profile))
+          }}
         ></UploadImageDialog>
       </Box>
 

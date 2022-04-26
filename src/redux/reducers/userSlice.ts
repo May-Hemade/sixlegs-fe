@@ -43,7 +43,6 @@ export const getUser = createAsyncThunk<User, void, { state: RootState }>(
         return rejectWithValue("error happened fetching the user")
       }
     } catch (error) {
-      console.log(error)
       return rejectWithValue(error)
     }
   }
@@ -116,6 +115,9 @@ export const userSlice = createSlice({
     closeChangePasswordSuccess: (state) => {
       state.isChangePasswordSuccessSnackBarOpen = false
     },
+    setProfile: (state, action: PayloadAction<User>) => {
+      state.profile = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUser.fulfilled, (state, action) => {
@@ -161,6 +163,7 @@ export const {
   setUpdateUserError,
   stopUpdateUserLoading,
   closeChangePasswordSuccess,
+  setProfile,
 } = userSlice.actions
 
 export default userSlice.reducer

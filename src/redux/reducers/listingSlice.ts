@@ -67,7 +67,6 @@ export const updateListingById = createAsyncThunk<
 >(
   "listing/updateListingById",
   async (listing, { getState, rejectWithValue }) => {
-    console.log(listing)
     try {
       let response = await fetch(
         `${process.env.REACT_APP_BE_URL}/listing/${listing.id}`,

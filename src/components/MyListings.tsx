@@ -1,6 +1,6 @@
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
-import { Link } from "@mui/material"
+import { Button, Link } from "@mui/material"
 import { Container, LinearProgress, Stack } from "@mui/material"
 import "../pages/profile.css"
 import Box from "@mui/material/Box"
@@ -14,7 +14,6 @@ import { Link as RouterLink } from "react-router-dom"
 
 export default function MyListings() {
   const listingState = useAppSelector((state) => state.listing)
-  console.log(listingState.myListings)
 
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -34,9 +33,9 @@ export default function MyListings() {
             My Listings
           </Typography>
           <div>
-            <Link component={RouterLink} to="/add-listing" variant="body2">
+            <Button component={RouterLink} to="/add-listing">
               <Add />
-            </Link>
+            </Button>
           </div>
         </Box>
         <Box sx={{ p: 3 }}>

@@ -77,21 +77,6 @@ export default function EditListing() {
             <Typography component="h1" variant="h5">
               Edit Listing
             </Typography>
-
-            <ButtonBase
-              sx={{ width: 100, height: 100, m: 4 }}
-              className="avatar-profile"
-            >
-              <Avatar
-                className="avatar-profile"
-                sx={{ width: 100, height: 100 }}
-              />
-            </ButtonBase>
-            <UploadImageDialog
-              url=""
-              property=""
-              onSuccess={() => {}}
-            ></UploadImageDialog>
           </Box>
 
           <Box

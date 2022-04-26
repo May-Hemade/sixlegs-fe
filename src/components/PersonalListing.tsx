@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import Switch from "@mui/material/Switch"
 
-import { Stack } from "@mui/material"
+import { Button, Stack } from "@mui/material"
 import "../pages/profile.css"
 import Box from "@mui/material/Box"
 
@@ -36,13 +36,12 @@ export default function PersonalListing(props: PersonalListingProps) {
           {props.listing.listingName}
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Link
+          <Button
             component={RouterLink}
             to={`/edit-listing/${props.listing.id}`}
-            variant="body2"
           >
             <Edit />
-          </Link>
+          </Button>
           <Switch {...label} defaultChecked />
         </Box>
       </Box>

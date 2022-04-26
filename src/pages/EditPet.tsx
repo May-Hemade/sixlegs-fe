@@ -6,8 +6,6 @@ import {
   ButtonBase,
   CircularProgress,
   CssBaseline,
-  LinearProgress,
-  Link,
   Stack,
   Typography,
 } from "@mui/material"
@@ -18,7 +16,12 @@ import UploadImageDialog from "../components/UploadImageDialog"
 
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
 import { useEffect, useState } from "react"
-import { addPet, getPetById, updatePetById } from "../redux/reducers/petSlice"
+import {
+  addPet,
+  getPetById,
+  setPetById,
+  updatePetById,
+} from "../redux/reducers/petSlice"
 import { DatePicker } from "@mui/x-date-pickers/DatePicker"
 import Pet from "../types/Pet"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
@@ -95,12 +98,15 @@ export default function EditPet() {
               <Avatar
                 className="avatar-profile"
                 sx={{ width: 100, height: 100 }}
+                src={petState.petById?.avatar}
               />
             </ButtonBase>
             <UploadImageDialog
               url={`${process.env.REACT_APP_BE_URL}/pet/${petState.petById?.id}/avatar`}
               property="petAvatar"
-              onSuccess={() => {}}
+              onSuccess={(pet) => {
+                dispatch(setPetById(pet))
+              }}
             ></UploadImageDialog>
           </Box>
 

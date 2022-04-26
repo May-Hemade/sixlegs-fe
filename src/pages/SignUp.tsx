@@ -52,7 +52,6 @@ export default function SignUp() {
   }
 
   const register = async (newUser: UserRegisteration) => {
-    console.log(newUser)
     try {
       let res = await fetch(`${process.env.REACT_APP_BE_URL}/user/register`, {
         method: "POST",

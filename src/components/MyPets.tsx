@@ -2,7 +2,14 @@ import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 
-import { Avatar, ButtonBase, Container, Link, Stack } from "@mui/material"
+import {
+  Avatar,
+  Button,
+  ButtonBase,
+  Container,
+  Link,
+  Stack,
+} from "@mui/material"
 import "../pages/profile.css"
 import Box from "@mui/material/Box"
 
@@ -14,7 +21,6 @@ import { Link as RouterLink } from "react-router-dom"
 
 export default function MyPets() {
   const petState = useAppSelector((state) => state.pet)
-  console.log(petState.myPets)
 
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -27,9 +33,9 @@ export default function MyPets() {
           <Typography component="span" variant="h5">
             My Pets
           </Typography>
-          <Link component={RouterLink} to="/add-pet" variant="body2">
+          <Button component={RouterLink} to="/add-pet">
             <Add />
-          </Link>
+          </Button>
         </Box>
         <Grid container sx={{ p: 3, m: 3 }}>
           {petState.myPets.map((pet) => (

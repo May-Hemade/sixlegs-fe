@@ -5,7 +5,7 @@ import { useAppSelector } from "../redux/hooks"
 export interface UploadImageProps {
   url: string
   property: string
-  onSuccess: () => void
+  onSuccess: (result: any) => void
 }
 
 const UploadImage = (props: UploadImageProps) => {
@@ -36,7 +36,7 @@ const UploadImage = (props: UploadImageProps) => {
       if (response.ok) {
         console.log("image uploaded")
         setIsLoading(false)
-        props.onSuccess()
+        props.onSuccess(await response.json())
       } else {
         console.log("image could not be uploaded")
         setIsLoading(false)
@@ -73,20 +73,16 @@ const UploadImage = (props: UploadImageProps) => {
         <Box component="form" onSubmit={(e: FormEvent) => upload(e)}>
           <label htmlFor="contained-button-file">
             <Input
-              // accept="image/*"
+              inputProps={{ accept: "image/*" }}
               id="contained-button-file"
               type="file"
               name={props.property}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 if (event.target.files) {
-                  console.log(event.target.files[0])
                   setSelectedImage(event.target.files[0])
                 }
               }}
             />
-            <Button variant="contained" component="span" sx={{ m: 3 }}>
-              Select Image
-            </Button>
           </label>
           <Button
             type="submit"
