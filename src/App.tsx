@@ -15,6 +15,7 @@ import Maps from "./pages/Maps"
 import EditProfile from "./pages/EditProfile"
 import ChangePassword from "./pages/ChangePassword"
 import EditListing from "./pages/EditListing"
+import EditPet from "./pages/EditPet"
 
 const theme = createTheme()
 
@@ -38,6 +39,7 @@ function App() {
               <Route path="/edit-listing/:id" element={<EditListing />} />
               <Route path="/add-listing" element={<EditListing />} />
               <Route path="/change-password" element={<ChangePassword />} />
+              <Route path="/edit-pet" element={<EditPet />} />
             </Route>
           </Routes>
         </div>

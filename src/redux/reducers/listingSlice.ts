@@ -22,13 +22,13 @@ export interface ListingState {
 
 const initialState: ListingState = {
   addedListing: undefined,
-  isAddLoading: true,
+  isAddLoading: false,
   isAddError: false,
   myListings: [],
   isGetLoading: true,
   isGetError: false,
   listingById: undefined,
-  isGetByIdLoading: true,
+  isGetByIdLoading: false,
   isGetByIdError: false,
   listingByIdUpdate: undefined,
   isUpdateByIdLoading: false,
