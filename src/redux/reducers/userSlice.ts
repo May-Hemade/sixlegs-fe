@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import ChangePasswordData from "../../types/ChangePasswordData"
 import User from "../../types/User"
 import { RootState } from "../store"
+import { showErrorSnackbar, showSuccessSnackbar } from "./snackbarSlice"
 
 export interface UserState {
   token: string
@@ -76,28 +77,33 @@ export const changePassword = createAsyncThunk<
   void,
   ChangePasswordData,
   { state: RootState }
->("user/changePassword", async (data, { getState, rejectWithValue }) => {
-  try {
-    let response = await fetch(
-      `${process.env.REACT_APP_BE_URL}/user/me/changePassword`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${getState().user.token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+>(
+  "user/changePassword",
+  async (data, { getState, rejectWithValue, dispatch }) => {
+    try {
+      let response = await fetch(
+        `${process.env.REACT_APP_BE_URL}/user/me/changePassword`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${getState().user.token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      )
+      if (response.ok) {
+        dispatch(showSuccessSnackbar("Password changed 😊"))
+        return
+      } else {
+        dispatch(showErrorSnackbar("An error occurred. Please try again later"))
+        return rejectWithValue("Couldn't change password")
       }
-    )
-    if (response.ok) {
-      return
-    } else {
-      return rejectWithValue("error happened updating the user")
+    } catch (error) {
+      return rejectWithValue(error)
     }
-  } catch (error) {
-    return rejectWithValue(error)
   }
-})
+)
 
 export const userSlice = createSlice({
   name: "user",
