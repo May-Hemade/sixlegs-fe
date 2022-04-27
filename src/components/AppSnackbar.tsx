@@ -1,21 +1,23 @@
-import { Alert, AlertColor, Snackbar } from "@mui/material"
+import { Alert, Snackbar } from "@mui/material"
+import { useAppDispatch, useAppSelector } from "../redux/hooks"
+import { hideSnackbar } from "../redux/reducers/snackbarSlice"
 
-interface AppSnackbarProps {
-  open: boolean
-  message: string
-  severity: AlertColor
-  onClose: () => void
-}
+export default function AppSnackbar() {
+  const dispatch = useAppDispatch()
+  const snackbarState = useAppSelector((state) => state.snackbar)
 
-export default function AppSnackbar(props: AppSnackbarProps) {
   return (
-    <Snackbar open={props.open} autoHideDuration={2000} onClose={props.onClose}>
+    <Snackbar
+      open={snackbarState.isOpen}
+      autoHideDuration={2000}
+      onClose={() => dispatch(hideSnackbar())}
+    >
       <Alert
-        onClose={props.onClose}
-        severity={props.severity}
+        onClose={() => dispatch(hideSnackbar())}
+        severity={snackbarState.severity}
         sx={{ width: "100%" }}
       >
-        {props.message}
+        {snackbarState.message}
       </Alert>
     </Snackbar>
   )

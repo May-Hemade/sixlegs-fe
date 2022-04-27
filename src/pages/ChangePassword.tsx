@@ -10,11 +10,11 @@ import {
 import ChangePasswordData from "../types/ChangePasswordData"
 import { useState } from "react"
 import AppSnackbar from "../components/AppSnackbar"
+import { showErrorSnackbar } from "../redux/reducers/snackbarSlice"
 
 export default function ChangePassword() {
   const dispatch = useAppDispatch()
   const userState = useAppSelector((state) => state.user)
-  const [snackbarOpen, setSnackbarOpen] = useState(false)
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -25,7 +25,7 @@ export default function ChangePassword() {
     const confirmPassword = data.get("confirmPassword")!.toString()
 
     if (newPassword !== confirmPassword) {
-      setSnackbarOpen(true)
+      dispatch(showErrorSnackbar("Passwords don't match"))
       return
     }
 
@@ -41,19 +41,7 @@ export default function ChangePassword() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
 
-      <AppSnackbar
-        open={snackbarOpen}
-        onClose={() => setSnackbarOpen(false)}
-        severity="error"
-        message="Passwords don't match"
-      />
-
-      <AppSnackbar
-        open={userState.isChangePasswordSuccessSnackBarOpen}
-        onClose={() => dispatch(closeChangePasswordSuccess())}
-        severity="success"
-        message="Password changed 😊"
-      />
+      <AppSnackbar />
 
       <Box
         sx={{

@@ -2,14 +2,7 @@ import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 
-import {
-  Avatar,
-  Button,
-  ButtonBase,
-  Container,
-  Link,
-  Stack,
-} from "@mui/material"
+import { Avatar, Button, ButtonBase, Container, Stack } from "@mui/material"
 import "../pages/profile.css"
 import Box from "@mui/material/Box"
 
