@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
 
 import { Link as RouterLink } from "react-router-dom"
+import { Link } from "@mui/material"
 
 export default function NavAppBar() {
   return (
@@ -23,9 +24,13 @@ export default function NavAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Six Legs
-          </Typography>
+          <Box sx={{ flexGrow: 1 }}>
+            <Button component={RouterLink} to="/" color="inherit">
+              <Typography variant="h6" component="div">
+                Six Legs
+              </Typography>
+            </Button>
+          </Box>
 
           <Button component={RouterLink} to="/profile" color="inherit">
             Profile

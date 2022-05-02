@@ -19,6 +19,7 @@ import userReducer from "../reducers/userSlice"
 import listingReducer from "../reducers/listingSlice"
 import petReducer from "../reducers/petSlice"
 import snackbarReducer from "../reducers/snackbarSlice"
+import searchReducer from "../reducers/searchSlice"
 
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
 
@@ -43,6 +44,7 @@ const bigReducer = combineReducers({
   listing: listingReducer,
   pet: petReducer,
   snackbar: snackbarReducer,
+  search: searchReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, bigReducer)

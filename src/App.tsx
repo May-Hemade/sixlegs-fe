@@ -6,16 +6,16 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 import SignUp from "./pages/SignUp"
 import SignIn from "./pages/SignIn"
-import Home from "./pages/Home"
+import SearchListings from "./pages/SearchLisitings"
 import WithoutNav from "./components/WithoutNav"
 import WithNav from "./components/WithNav"
-import HostListing from "./pages/HostListing"
 import Profile from "./pages/Profile"
-import Maps from "./pages/Maps"
+
 import EditProfile from "./pages/EditProfile"
 import ChangePassword from "./pages/ChangePassword"
 import EditListing from "./pages/EditListing"
 import EditPet from "./pages/EditPet"
+import Home from "./components/SearchBar"
 
 const theme = createTheme()
 
@@ -30,10 +30,9 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
             </Route>
             <Route element={<WithNav />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/listing" element={<HostListing />} />
+              <Route path="/search-listings" element={<SearchListings />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/maps" element={<Maps />} />
+              <Route path="/" element={<Home />} />
               <Route path="/edit-profile" element={<EditProfile />} />
               <Route path="/edit-listing/:id" element={<EditListing />} />
               <Route path="/add-listing" element={<EditListing />} />

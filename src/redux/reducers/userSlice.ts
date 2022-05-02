@@ -131,11 +131,11 @@ export const userSlice = createSlice({
       state.isError = false
       state.isLoading = false
     })
-    builder.addCase(getUser.rejected, (state, action) => {
+    builder.addCase(getUser.rejected, (state) => {
       state.isError = true
       state.isLoading = false
     })
-    builder.addCase(updateUser.pending, (state, action) => {
+    builder.addCase(updateUser.pending, (state) => {
       state.isUpdateError = false
       state.isUpdateLoading = true
     })

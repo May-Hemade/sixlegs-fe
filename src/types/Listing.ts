@@ -1,3 +1,5 @@
+import User from "./User"
+
 export default interface Listing {
   id?: number
   ownerId?: number
@@ -7,4 +9,5 @@ export default interface Listing {
   description: string | null
   listingName: string
   pricePerNight: number
+  owner?: User
 }
