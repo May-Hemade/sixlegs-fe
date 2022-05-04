@@ -2,7 +2,7 @@ import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 
-import { Avatar, Button, ButtonBase, Container, Stack } from "@mui/material"
+import { Avatar, ButtonBase, Container, IconButton, Stack } from "@mui/material"
 import "../pages/profile.css"
 import Box from "@mui/material/Box"
 
@@ -26,9 +26,9 @@ export default function MyPets() {
           <Typography component="span" variant="h5">
             My Pets
           </Typography>
-          <Button component={RouterLink} to="/add-pet">
+          <IconButton component={RouterLink} to="/add-pet">
             <Add />
-          </Button>
+          </IconButton>
         </Box>
         <Grid container sx={{ p: 3, m: 3 }}>
           {petState.myPets.map((pet) => (

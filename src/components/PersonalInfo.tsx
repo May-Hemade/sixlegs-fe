@@ -2,7 +2,14 @@ import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import ButtonBase from "@mui/material/ButtonBase"
-import { Avatar, Button, Container, LinearProgress, Stack } from "@mui/material"
+import {
+  Avatar,
+  Button,
+  Container,
+  IconButton,
+  LinearProgress,
+  Stack,
+} from "@mui/material"
 import "../pages/profile.css"
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
 import { useEffect } from "react"
@@ -39,9 +46,9 @@ export default function PersonalProfile() {
               <Typography component="span" variant="h5">
                 Profile
               </Typography>
-              <Button component={RouterLink} to="/edit-profile">
+              <IconButton component={RouterLink} to="/edit-profile">
                 <Edit />
-              </Button>
+              </IconButton>
             </Box>
 
             <Grid container spacing={2} sx={{ p: 4 }}>

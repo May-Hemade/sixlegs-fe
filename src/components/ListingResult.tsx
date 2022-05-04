@@ -3,9 +3,10 @@ import {
   CircularProgress,
   Divider,
   Stack,
+  TextField,
   Typography,
 } from "@mui/material"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
 import { searchListings } from "../redux/reducers/searchSlice"
 import { Boundingbox } from "../types/SearchLocation"
@@ -13,17 +14,22 @@ import SingleListing from "./SingleListing"
 
 function ListingResult() {
   const searchState = useAppSelector((state) => state.search)
+  const [listingFilter, setListingFilter] = useState("")
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     const bounds: Boundingbox = {
-      lonStart: 0,
-      latStart: 0,
-      lonEnd: 0,
-      latEnd: 0,
+      latStart: parseInt(searchState.selectedLocation?.boundingbox[0] ?? "0"),
+      lonStart: parseInt(searchState.selectedLocation?.boundingbox[1] ?? "0"),
+      latEnd: parseInt(searchState.selectedLocation?.boundingbox[2] ?? "0"),
+      lonEnd: parseInt(searchState.selectedLocation?.boundingbox[3] ?? "0"),
     }
     dispatch(searchListings(bounds))
   }, [searchState.selectedLocation])
+
+  const handleFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setListingFilter(event.target.value)
+  }
 
   return (
     <Box>
@@ -36,10 +42,25 @@ function ListingResult() {
       {!searchState.isSearchListingLoading &&
         !searchState.isSearchListingError && (
           <Box>
+            <Box sx={{ px: 3 }}>
+              <TextField
+                id="filter-results"
+                label="Search listings"
+                fullWidth
+                onChange={handleFilter}
+              />
+            </Box>
+
             <Stack divider={<Divider />}>
-              {searchState.searchListingsResult.map((listing) => (
-                <SingleListing key={listing.id} listing={listing} />
-              ))}
+              {searchState.searchListingsResult
+                .filter((listing) =>
+                  listing.listingName
+                    .toLowerCase()
+                    .includes(listingFilter.toLowerCase())
+                )
+                .map((listing) => (
+                  <SingleListing key={listing.id} listing={listing} />
+                ))}
             </Stack>
           </Box>
         )}

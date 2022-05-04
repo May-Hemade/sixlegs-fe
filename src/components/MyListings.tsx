@@ -1,6 +1,6 @@
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
-import { Button, Link } from "@mui/material"
+import { Button, IconButton, Link } from "@mui/material"
 import { Container, LinearProgress, Stack } from "@mui/material"
 import "../pages/profile.css"
 import Box from "@mui/material/Box"
@@ -33,12 +33,12 @@ export default function MyListings() {
             My Listings
           </Typography>
           <div>
-            <Button component={RouterLink} to="/add-listing">
+            <IconButton component={RouterLink} to="/add-listing">
               <Add />
-            </Button>
+            </IconButton>
           </div>
         </Box>
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 0 }}>
           {listingState.isGetLoading && !listingState.isGetError && (
             <Box sx={{ p: 4 }}>
               <LinearProgress color="secondary" />
@@ -46,7 +46,7 @@ export default function MyListings() {
           )}
 
           {listingState.myListings.length > 0 && !listingState.isGetError && (
-            <Stack sx={{ p: 3 }} spacing={2}>
+            <Stack sx={{ px: 3, pb: 3 }} spacing={2}>
               {listingState.myListings.map((listing) => (
                 <PersonalListing listing={listing} key={listing.id} />
               ))}

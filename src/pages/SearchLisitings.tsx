@@ -1,6 +1,6 @@
 import { CssBaseline, Grid } from "@mui/material"
 import { Box } from "@mui/system"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import ListingResult from "../components/ListingResult"
 import SearchMap from "../components/SearchMap"
@@ -23,7 +23,7 @@ function SearchLisitings() {
 
   return (
     <div>
-      <CheckLoggedIn />
+      {/* <CheckLoggedIn /> */}
       <CssBaseline />
 
       <Box>
@@ -33,14 +33,14 @@ function SearchLisitings() {
             item
             xs={4}
             style={{
-              paddingTop: "4ch",
+              paddingTop: "1ch",
               paddingBottom: "4ch",
               overflow: "auto",
               maxHeight: "100vh",
             }}
             className="hide-scroll"
           >
-            <Box sx={{ m: 3 }}></Box>
+            <Box sx={{ mx: 3 }}></Box>
             <ListingResult />
           </Grid>
           <Grid item xs={8}>

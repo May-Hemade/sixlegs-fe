@@ -16,6 +16,8 @@ import ChangePassword from "./pages/ChangePassword"
 import EditListing from "./pages/EditListing"
 import EditPet from "./pages/EditPet"
 import Home from "./components/SearchBar"
+import ListingDetails from "./pages/ListingDetails"
+import ListingBookings from "./pages/ListingBookings"
 
 const theme = createTheme()
 
@@ -35,10 +37,15 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/edit-profile" element={<EditProfile />} />
               <Route path="/edit-listing/:id" element={<EditListing />} />
+              <Route
+                path="/listing/:id/bookings"
+                element={<ListingBookings />}
+              />
               <Route path="/add-listing" element={<EditListing />} />
               <Route path="/change-password" element={<ChangePassword />} />
               <Route path="/edit-pet/:id" element={<EditPet />} />
               <Route path="/add-pet" element={<EditPet />} />
+              <Route path="/listing-details/:id" element={<ListingDetails />} />
             </Route>
           </Routes>
         </div>

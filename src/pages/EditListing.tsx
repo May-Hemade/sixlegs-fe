@@ -19,7 +19,7 @@ import { useEffect } from "react"
 
 import {
   addListing,
-  getListingsById,
+  getListingById,
   updateListingById,
 } from "../redux/reducers/listingSlice"
 import Listing from "../types/Listing"
@@ -32,7 +32,7 @@ export default function EditListing() {
   useEffect(() => {
     if (params.id) {
       const listingId = parseInt(params.id)
-      dispatch(getListingsById(listingId))
+      dispatch(getListingById(listingId))
     }
   }, [])
 

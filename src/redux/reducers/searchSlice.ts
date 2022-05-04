@@ -3,6 +3,7 @@ import Listing from "../../types/Listing"
 import { Boundingbox, SearchLocation } from "../../types/SearchLocation"
 import { RootState } from "../store"
 import { Range } from "react-date-range"
+import { json } from "stream/consumers"
 
 export interface SearchState {
   searchCityResults: SearchLocation[]
@@ -50,23 +51,32 @@ export const searchListings = createAsyncThunk<
   Listing[],
   Boundingbox,
   { state: RootState }
->("search/searchListings", async (options, { getState, rejectWithValue }) => {
-  try {
-    let response = await fetch(`${process.env.REACT_APP_BE_URL}/listing`, {
-      headers: {
-        Authorization: `Bearer ${getState().user.token}`,
-      },
-    })
-    if (response.ok) {
-      let result = await response.json()
-      return result
-    } else {
-      return rejectWithValue("error happened fetching the listings")
+>(
+  "search/searchListings",
+  async (boundingbox, { getState, rejectWithValue }) => {
+    try {
+      let response = await fetch(
+        `${process.env.REACT_APP_BE_URL}/listing/search`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${getState().user.token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(boundingbox),
+        }
+      )
+      if (response.ok) {
+        let result = await response.json()
+        return result
+      } else {
+        return rejectWithValue("error happened fetching the listings")
+      }
+    } catch (error) {
+      return rejectWithValue(error)
     }
-  } catch (error) {
-    return rejectWithValue(error)
   }
-})
+)
 
 export const searchSlice = createSlice({
   name: "search",
@@ -78,9 +88,9 @@ export const searchSlice = createSlice({
     ) => {
       state.selectedLocation = action.payload
     },
-    setDateRange: (state, action: PayloadAction<Range>) => {
-      state.startDate = action.payload.startDate?.getTime()
-      state.endDate = action.payload.endDate?.getTime()
+    setDateRange: (state, action: PayloadAction<number[]>) => {
+      state.startDate = action.payload[0]
+      state.endDate = action.payload[1]
     },
   },
 

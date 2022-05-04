@@ -1,4 +1,3 @@
-import { ThunkAction } from "redux-thunk"
 import localStorage from "redux-persist/lib/storage"
 
 import {
@@ -14,12 +13,13 @@ import {
 import { encryptTransform } from "redux-persist-transform-encrypt"
 
 import homeReducer from "../reducers/homeReducer"
-
 import userReducer from "../reducers/userSlice"
 import listingReducer from "../reducers/listingSlice"
 import petReducer from "../reducers/petSlice"
 import snackbarReducer from "../reducers/snackbarSlice"
 import searchReducer from "../reducers/searchSlice"
+import reviewReducer from "../reducers/reviewSlice"
+import bookingReducer from "../reducers/bookingSlice"
 
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
 
@@ -45,6 +45,8 @@ const bigReducer = combineReducers({
   pet: petReducer,
   snackbar: snackbarReducer,
   search: searchReducer,
+  review: reviewReducer,
+  booking: bookingReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, bigReducer)

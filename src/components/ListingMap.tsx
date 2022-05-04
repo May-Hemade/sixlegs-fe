@@ -3,14 +3,14 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet"
 import { useAppSelector } from "../redux/hooks"
 import { LatLng, LatLngTuple } from "leaflet"
 
-function SearchMap() {
+function ListingMap() {
   return (
     <div>
       <MapContainer
         center={[33.8969, 35.5271]}
         zoom={10}
-        scrollWheelZoom={true}
-        style={{ height: "100vh", width: "100%" }}
+        scrollWheelZoom={false}
+        style={{ height: "90vh", width: "100%" }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -78,4 +78,4 @@ const Markers = () => {
   )
 }
 
-export default SearchMap
+export default ListingMap

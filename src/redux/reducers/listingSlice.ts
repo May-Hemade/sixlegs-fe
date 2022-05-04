@@ -114,7 +114,7 @@ export const getMyListings = createAsyncThunk<
   }
 })
 
-export const getListingsById = createAsyncThunk<
+export const getListingById = createAsyncThunk<
   Listing,
   number,
   { state: RootState }
@@ -173,16 +173,16 @@ export const listingSlice = createSlice({
       state.isGetError = true
       state.isGetLoading = false
     })
-    builder.addCase(getListingsById.pending, (state) => {
+    builder.addCase(getListingById.pending, (state) => {
       state.isGetByIdLoading = true
       state.isGetByIdError = false
     })
-    builder.addCase(getListingsById.fulfilled, (state, action) => {
+    builder.addCase(getListingById.fulfilled, (state, action) => {
       state.listingById = action.payload
       state.isGetByIdError = false
       state.isGetByIdLoading = false
     })
-    builder.addCase(getListingsById.rejected, (state) => {
+    builder.addCase(getListingById.rejected, (state) => {
       state.isGetByIdError = true
       state.isGetByIdLoading = false
     })

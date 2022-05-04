@@ -35,6 +35,9 @@ export default function NavAppBar() {
           <Button component={RouterLink} to="/profile" color="inherit">
             Profile
           </Button>
+          <Button component={RouterLink} to="/logout" color="inherit">
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>

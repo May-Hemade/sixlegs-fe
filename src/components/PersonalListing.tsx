@@ -2,15 +2,21 @@ import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import Switch from "@mui/material/Switch"
 
-import { Button, Stack } from "@mui/material"
+import { Button, Grid, IconButton, Stack } from "@mui/material"
 import "../pages/profile.css"
 import Box from "@mui/material/Box"
 
 import Listing from "../types/Listing"
 
-import { Edit } from "@mui/icons-material"
+import {
+  CalendarMonth,
+  CalendarToday,
+  CalendarTodayOutlined,
+  Edit,
+} from "@mui/icons-material"
 
 import { Link as RouterLink } from "react-router-dom"
+import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1"
 
 const label = { inputProps: { "aria-label": "Switch demo" } }
 
@@ -34,13 +40,19 @@ export default function PersonalListing(props: PersonalListingProps) {
           {props.listing.listingName}
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Button
+          <IconButton
+            component={RouterLink}
+            to={`/listing/${props.listing.id}/bookings`}
+          >
+            <CalendarMonth />
+          </IconButton>
+          <IconButton
             component={RouterLink}
             to={`/edit-listing/${props.listing.id}`}
           >
             <Edit />
-          </Button>
-          <Switch {...label} defaultChecked />
+          </IconButton>
+          {/* <Switch {...label} defaultChecked /> */}
         </Box>
       </Box>
       <Stack spacing={2} sx={{ mt: 3 }}>

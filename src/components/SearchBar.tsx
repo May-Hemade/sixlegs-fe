@@ -21,6 +21,7 @@ import CheckLoggedIn from "./CheckLoggedIn"
 
 function Home() {
   const searchState = useAppSelector((state) => state.search)
+  const dispatch = useAppDispatch()
 
   const dateRanges = () => {
     return [
@@ -35,10 +36,11 @@ function Home() {
   console.log(dateRanges())
 
   const handleDateRange = (ranges: Range[]) => {
-    dispatch(setDateRange(ranges[0]))
+    const dates: number[] = []
+    dates.push(ranges[0].startDate?.getTime() ?? 0)
+    dates.push(ranges[0].endDate?.getTime() ?? 0)
+    dispatch(setDateRange(dates))
   }
-
-  const dispatch = useAppDispatch()
 
   const [datePickerOpen, setDatePickerOpen] = React.useState(false)
 
