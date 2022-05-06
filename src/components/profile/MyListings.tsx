@@ -1,16 +1,16 @@
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
-import { Button, IconButton, Link } from "@mui/material"
+import { IconButton } from "@mui/material"
 import { Container, LinearProgress, Stack } from "@mui/material"
-import "../pages/profile.css"
+import "../../pages/profile.css"
 import Box from "@mui/material/Box"
 import { Add } from "@mui/icons-material"
-import PersonalListing from "./PersonalListing"
-import { useAppDispatch, useAppSelector } from "../redux/hooks"
+import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 import { useEffect } from "react"
-import { getMyListings } from "../redux/reducers/listingSlice"
+import { getMyListings } from "../../redux/reducers/listingSlice"
 
 import { Link as RouterLink } from "react-router-dom"
+import PersonalListing from "./PersonalListing"
 
 export default function MyListings() {
   const listingState = useAppSelector((state) => state.listing)

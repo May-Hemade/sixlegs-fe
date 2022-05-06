@@ -20,8 +20,14 @@ import snackbarReducer from "../reducers/snackbarSlice"
 import searchReducer from "../reducers/searchSlice"
 import reviewReducer from "../reducers/reviewSlice"
 import bookingReducer from "../reducers/bookingSlice"
+import productReducer from "../reducers/productSlice"
 
-import { configureStore, combineReducers } from "@reduxjs/toolkit"
+import {
+  configureStore,
+  combineReducers,
+  Reducer,
+  AnyAction,
+} from "@reduxjs/toolkit"
 
 const encryptSecretKey = process.env.REACT_APP_SECRET_PERSIST_KEY
 if (!encryptSecretKey) {
@@ -47,9 +53,17 @@ const bigReducer = combineReducers({
   search: searchReducer,
   review: reviewReducer,
   booking: bookingReducer,
+  product: productReducer,
 })
 
-const persistedReducer = persistReducer(persistConfig, bigReducer)
+const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
+  if (action.type === "user/logout") {
+    state = {} as RootState
+  }
+  return bigReducer(state, action)
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
   reducer: persistedReducer,

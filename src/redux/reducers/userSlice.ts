@@ -96,7 +96,9 @@ export const changePassword = createAsyncThunk<
         dispatch(showSuccessSnackbar("Password changed 😊"))
         return
       } else {
-        dispatch(showErrorSnackbar("An error occurred. Please try again later"))
+        dispatch(
+          showErrorSnackbar("An error occurred 😔. Please try again later")
+        )
         return rejectWithValue("Couldn't change password")
       }
     } catch (error) {
@@ -124,6 +126,7 @@ export const userSlice = createSlice({
     setProfile: (state, action: PayloadAction<User>) => {
       state.profile = action.payload
     },
+    logout: (state) => {},
   },
   extraReducers: (builder) => {
     builder.addCase(getUser.fulfilled, (state, action) => {
@@ -170,6 +173,7 @@ export const {
   stopUpdateUserLoading,
   closeChangePasswordSuccess,
   setProfile,
+  logout,
 } = userSlice.actions
 
 export default userSlice.reducer

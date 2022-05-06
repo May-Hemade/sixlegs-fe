@@ -10,13 +10,15 @@ import {
   LinearProgress,
   Stack,
 } from "@mui/material"
-import "../pages/profile.css"
-import { useAppDispatch, useAppSelector } from "../redux/hooks"
+import "../../pages/profile.css"
+
 import { useEffect } from "react"
 import { Box } from "@mui/system"
-import { getUser } from "../redux/reducers/userSlice"
+
 import { Edit } from "@mui/icons-material"
 import { Link as RouterLink } from "react-router-dom"
+import { useAppDispatch, useAppSelector } from "../../redux/hooks"
+import { getUser } from "../../redux/reducers/userSlice"
 
 export default function PersonalProfile() {
   const userState = useAppSelector((state) => state.user)

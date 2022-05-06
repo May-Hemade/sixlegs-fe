@@ -15,11 +15,22 @@ import EditProfile from "./pages/EditProfile"
 import ChangePassword from "./pages/ChangePassword"
 import EditListing from "./pages/EditListing"
 import EditPet from "./pages/EditPet"
-import Home from "./components/SearchBar"
+import Home from "./pages/Home"
 import ListingDetails from "./pages/ListingDetails"
 import ListingBookings from "./pages/ListingBookings"
+import { orange, purple, yellow } from "@mui/material/colors"
 
-const theme = createTheme()
+const theme = createTheme({
+  palette: {
+    primary: orange,
+    secondary: {
+      // This is green.A700 as hex.
+      main: "#11cb5f",
+    },
+  },
+
+  typography: {},
+})
 
 function App() {
   return (

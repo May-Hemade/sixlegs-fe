@@ -19,11 +19,13 @@ function ListingResult() {
 
   useEffect(() => {
     const bounds: Boundingbox = {
-      latStart: parseInt(searchState.selectedLocation?.boundingbox[0] ?? "0"),
-      lonStart: parseInt(searchState.selectedLocation?.boundingbox[1] ?? "0"),
-      latEnd: parseInt(searchState.selectedLocation?.boundingbox[2] ?? "0"),
-      lonEnd: parseInt(searchState.selectedLocation?.boundingbox[3] ?? "0"),
+      latStart: parseFloat(searchState.selectedLocation?.boundingbox[0] ?? "0"),
+      lonStart: parseFloat(searchState.selectedLocation?.boundingbox[2] ?? "0"),
+      latEnd: parseFloat(searchState.selectedLocation?.boundingbox[1] ?? "0"),
+      lonEnd: parseFloat(searchState.selectedLocation?.boundingbox[3] ?? "0"),
     }
+    console.log(searchState.selectedLocation?.boundingbox)
+    console.log(bounds)
     dispatch(searchListings(bounds))
   }, [searchState.selectedLocation])
 

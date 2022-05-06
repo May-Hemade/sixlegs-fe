@@ -1,24 +1,14 @@
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
-import Switch from "@mui/material/Switch"
 
-import { Button, Grid, IconButton, Stack } from "@mui/material"
-import "../pages/profile.css"
+import { IconButton, Stack } from "@mui/material"
+import "../../pages/profile.css"
 import Box from "@mui/material/Box"
 
-import Listing from "../types/Listing"
-
-import {
-  CalendarMonth,
-  CalendarToday,
-  CalendarTodayOutlined,
-  Edit,
-} from "@mui/icons-material"
+import { CalendarMonth, Edit } from "@mui/icons-material"
 
 import { Link as RouterLink } from "react-router-dom"
-import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1"
-
-const label = { inputProps: { "aria-label": "Switch demo" } }
+import Listing from "../../types/Listing"
 
 interface PersonalListingProps {
   listing: Listing

@@ -19,19 +19,26 @@ import { getListingById } from "../redux/reducers/listingSlice"
 import { setDateRange } from "../redux/reducers/searchSlice"
 import { DateRange, Range } from "react-date-range"
 import { SendReview } from "../types/SendReview"
-import { addReview, getReviews } from "../redux/reducers/reviewSlice"
+import {
+  addReview,
+  getReviews,
+  setCurrentComment,
+} from "../redux/reducers/reviewSlice"
 import CheckLoggedIn from "../components/CheckLoggedIn"
 import UserReview from "../components/UserReview"
 import { SendBooking } from "../types/SendBooking"
 import { createBooking } from "../redux/reducers/bookingSlice"
 import { differenceInCalendarDays } from "date-fns"
 import ConfirmationDialog from "../components/ConfirmationDialog"
+import AppSnackbar from "../components/AppSnackbar"
+import { showErrorSnackbar } from "../redux/reducers/snackbarSlice"
+import { _renderMatches } from "react-router/lib/hooks"
 
 function ListingDetails() {
   const searchState = useAppSelector((state) => state.search)
   const listingState = useAppSelector((state) => state.listing)
   const reviewState = useAppSelector((state) => state.review)
-  const [ratingValue, setRatingValue] = useState(0)
+  const [ratingValue, setRatingValue] = useState<number | null>(0)
   const [confirmOpen, setConfirmOpen] = useState(false)
   const { id } = useParams()
   const listingId = parseInt(id ?? "0")
@@ -47,6 +54,12 @@ function ListingDetails() {
   const handleSubmitReview = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
+
+    if (ratingValue === null || ratingValue === 0) {
+      dispatch(showErrorSnackbar("Please set a rating from 1 to 5"))
+      return
+    }
+
     const review: SendReview = {
       rating: ratingValue,
       comment: data.get("comment")!.toString(),
@@ -106,9 +119,15 @@ function ListingDetails() {
       dispatch(getReviews(listingId))
     }
   }, [])
+
+  useEffect(() => {
+    setRatingValue(reviewState.currentRating)
+  }, [reviewState.currentRating])
+
   return (
     <div>
       <CheckLoggedIn />
+      <AppSnackbar />
       <Container maxWidth="md">
         {listingState.isGetByIdLoading && (
           <Box sx={{ p: 5, display: "flex", justifyContent: "center" }}>
@@ -153,7 +172,7 @@ function ListingDetails() {
                         <HoverRating
                           showLabel={false}
                           value={5}
-                          readOnly={false}
+                          readOnly={true}
                         />
                       </Box>
                       <Box>
@@ -261,8 +280,9 @@ function ListingDetails() {
                 >
                   <HoverRating
                     showLabel={true}
-                    value={ratingValue}
+                    value={reviewState.currentRating}
                     readOnly={false}
+                    onChange={setRatingValue}
                   />
 
                   <TextField
@@ -271,6 +291,10 @@ function ListingDetails() {
                     maxRows={5}
                     name="comment"
                     label="Comment"
+                    value={reviewState.currentComment}
+                    onChange={(e) => {
+                      dispatch(setCurrentComment(e.target.value))
+                    }}
                     fullWidth
                   />
 

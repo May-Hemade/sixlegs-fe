@@ -3,14 +3,14 @@ import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 
 import { Avatar, ButtonBase, Container, IconButton, Stack } from "@mui/material"
-import "../pages/profile.css"
+import "../../pages/profile.css"
 import Box from "@mui/material/Box"
 
 import { Add } from "@mui/icons-material"
-import { useAppDispatch, useAppSelector } from "../redux/hooks"
 import { useEffect } from "react"
-import { getMyPets } from "../redux/reducers/petSlice"
 import { Link as RouterLink } from "react-router-dom"
+import { useAppDispatch, useAppSelector } from "../../redux/hooks"
+import { getMyPets } from "../../redux/reducers/petSlice"
 
 export default function MyPets() {
   const petState = useAppSelector((state) => state.pet)

@@ -8,14 +8,17 @@ import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
 
 import { Link as RouterLink } from "react-router-dom"
-import { Link } from "@mui/material"
+import { useAppDispatch } from "../redux/hooks"
+import { logout } from "../redux/reducers/userSlice"
 
 export default function NavAppBar() {
+  const dispatch = useAppDispatch()
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -23,19 +26,22 @@ export default function NavAppBar() {
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Box sx={{ flexGrow: 1 }}>
-            <Button component={RouterLink} to="/" color="inherit">
-              <Typography variant="h6" component="div">
-                Six Legs
-              </Typography>
+            <Button component={RouterLink} to="/" color="inherit" sx={{ p: 0 }}>
+              <Box component="img" src="/logo.png" sx={{ height: 32 }} />
             </Button>
           </Box>
 
           <Button component={RouterLink} to="/profile" color="inherit">
             Profile
           </Button>
-          <Button component={RouterLink} to="/logout" color="inherit">
+          <Button
+            component={RouterLink}
+            to="/signin"
+            color="inherit"
+            onClick={() => dispatch(logout())}
+          >
             Logout
           </Button>
         </Toolbar>

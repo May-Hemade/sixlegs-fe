@@ -1,11 +1,13 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import Review from "../../types/Review"
 import { SendReview } from "../../types/SendReview"
 
 import { RootState } from "../store"
 
 export interface ReviewState {
-  addedReview?: Review
+  currentRating: number | null
+  currentComment: string
+
   isAddLoadingReview: boolean
   isAddErrorReview: boolean
   listingReviews: Review[]
@@ -14,7 +16,8 @@ export interface ReviewState {
 }
 
 const initialState: ReviewState = {
-  addedReview: undefined,
+  currentRating: 0,
+  currentComment: "",
   isAddLoadingReview: false,
   isAddErrorReview: false,
   listingReviews: [],
@@ -78,14 +81,23 @@ export const getReviews = createAsyncThunk<
 export const reviewSlice = createSlice({
   name: "review",
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentRating: (state, action: PayloadAction<number | null>) => {
+      state.currentRating = action.payload
+    },
+    setCurrentComment: (state, action: PayloadAction<string>) => {
+      state.currentComment = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(addReview.pending, (state) => {
       state.isAddErrorReview = false
       state.isAddLoadingReview = true
     })
     builder.addCase(addReview.fulfilled, (state, action) => {
-      state.listingReviews.push(action.payload)
+      state.listingReviews.unshift(action.payload)
+      state.currentComment = ""
+      state.currentRating = 0
       state.isAddErrorReview = false
       state.isAddLoadingReview = false
     })
@@ -109,5 +121,7 @@ export const reviewSlice = createSlice({
     })
   },
 })
+
+export const { setCurrentComment, setCurrentRating } = reviewSlice.actions
 
 export default reviewSlice.reducer

@@ -15,24 +15,31 @@ import { Container } from "@mui/material"
 import UploadImageDialog from "../components/UploadImageDialog"
 
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 import {
   addListing,
+  clearListingById,
   getListingById,
   updateListingById,
 } from "../redux/reducers/listingSlice"
 import Listing from "../types/Listing"
+import AppSnackbar from "../components/AppSnackbar"
 
 export default function EditListing() {
   const listingState = useAppSelector((state) => state.listing)
+  const [title, setTitle] = useState("")
   const dispatch = useAppDispatch()
   const params = useParams()
 
   useEffect(() => {
     if (params.id) {
       const listingId = parseInt(params.id)
+      setTitle("Edit Listing")
       dispatch(getListingById(listingId))
+    } else {
+      setTitle("Add Listing")
+      dispatch(clearListingById())
     }
   }, [])
 
@@ -58,6 +65,8 @@ export default function EditListing() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
 
+      <AppSnackbar />
+
       {listingState.isGetByIdLoading && (
         <Box sx={{ p: 5, display: "flex", justifyContent: "center" }}>
           <CircularProgress color="secondary" />
@@ -75,7 +84,7 @@ export default function EditListing() {
             }}
           >
             <Typography component="h1" variant="h5">
-              Edit Listing
+              {title}
             </Typography>
           </Box>
 

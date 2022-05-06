@@ -69,7 +69,10 @@ const Markers = () => {
         (listing) =>
           listing.latitude &&
           listing.longitude && (
-            <Marker position={new LatLng(listing.latitude, listing.longitude)}>
+            <Marker
+              key={listing.id}
+              position={new LatLng(listing.latitude, listing.longitude)}
+            >
               <Popup>{listing.listingName}</Popup>
             </Marker>
           )

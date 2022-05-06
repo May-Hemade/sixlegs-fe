@@ -1,11 +1,8 @@
-import * as React from "react"
-
 import "./profile.css"
 
-import PersonalProfile from "../components/PersonalInfo"
-
-import PetListing from "../components/MyPets"
-import MyListings from "../components/MyListings"
+import PetListing from "../components/profile/MyPets"
+import PersonalProfile from "../components/profile/PersonalInfo"
+import MyListings from "../components/profile/MyListings"
 
 export default function Profile() {
   return (

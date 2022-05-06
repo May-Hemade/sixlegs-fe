@@ -4,6 +4,7 @@ import ChangePasswordData from "../../types/ChangePasswordData"
 import Listing from "../../types/Listing"
 import User from "../../types/User"
 import { RootState } from "../store"
+import { showErrorSnackbar, showSuccessSnackbar } from "./snackbarSlice"
 
 export interface ListingState {
   addedListing?: Listing
@@ -39,26 +40,33 @@ export const addListing = createAsyncThunk<
   Listing,
   Listing,
   { state: RootState }
->("listing/addListing", async (listing, { getState, rejectWithValue }) => {
-  try {
-    let response = await fetch(`${process.env.REACT_APP_BE_URL}/listing`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${getState().user.token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(listing),
-    })
-    if (response.ok) {
-      let result = await response.json()
-      return result
-    } else {
-      return rejectWithValue("Couldn't create listing")
+>(
+  "listing/addListing",
+  async (listing, { getState, rejectWithValue, dispatch }) => {
+    try {
+      let response = await fetch(`${process.env.REACT_APP_BE_URL}/listing`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${getState().user.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(listing),
+      })
+      if (response.ok) {
+        let result = await response.json()
+        dispatch(showSuccessSnackbar("Listing created successfully :)"))
+        return result
+      } else {
+        dispatch(
+          showErrorSnackbar("An error occurred. Please try again later.")
+        )
+        return rejectWithValue("Couldn't create listing")
+      }
+    } catch (error) {
+      return rejectWithValue(error)
     }
-  } catch (error) {
-    return rejectWithValue(error)
   }
-})
+)
 
 export const updateListingById = createAsyncThunk<
   Listing,
@@ -66,7 +74,7 @@ export const updateListingById = createAsyncThunk<
   { state: RootState }
 >(
   "listing/updateListingById",
-  async (listing, { getState, rejectWithValue }) => {
+  async (listing, { getState, rejectWithValue, dispatch }) => {
     try {
       let response = await fetch(
         `${process.env.REACT_APP_BE_URL}/listing/${listing.id}`,
@@ -81,9 +89,13 @@ export const updateListingById = createAsyncThunk<
       )
       if (response.ok) {
         let result = await response.json()
-        console.log(result)
+
+        dispatch(showSuccessSnackbar("Listing updated"))
         return result
       } else {
+        dispatch(
+          showErrorSnackbar("An error occurred. Please try again later.")
+        )
         return rejectWithValue("Couldn't update listing")
       }
     } catch (error) {
@@ -145,7 +157,11 @@ export const getListingById = createAsyncThunk<
 export const listingSlice = createSlice({
   name: "lisitng",
   initialState,
-  reducers: {},
+  reducers: {
+    clearListingById: (state) => {
+      state.listingById = undefined
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(addListing.pending, (state) => {
       state.isAddError = false
@@ -202,5 +218,7 @@ export const listingSlice = createSlice({
     })
   },
 })
+
+export const { clearListingById } = listingSlice.actions
 
 export default listingSlice.reducer

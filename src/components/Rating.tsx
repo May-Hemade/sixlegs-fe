@@ -14,10 +14,12 @@ const labels: { [index: string]: string } = {
 function getLabelText(value: number) {
   return `${value} Star${value !== 1 ? "s" : ""}, ${labels[value]}`
 }
+
 interface HoverRatingProps {
   showLabel: boolean
   value: number | null
   readOnly: boolean
+  onChange?: (rating: number | null) => void
 }
 
 export default function HoverRating(props: HoverRatingProps) {
@@ -40,6 +42,9 @@ export default function HoverRating(props: HoverRatingProps) {
         readOnly={props.readOnly}
         onChange={(_event, newValue) => {
           setValue(newValue)
+          if (props.onChange) {
+            props.onChange(newValue)
+          }
         }}
         onChangeActive={(_event, newHover) => {
           setHover(newHover)

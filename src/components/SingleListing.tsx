@@ -66,7 +66,7 @@ export default function PersonalListing(props: SingleListingProps) {
               </div>
             </Stack>
           </Grid>
-          <Grid xs={6}>
+          <Grid item xs={6}>
             <Stack spacing={2} sx={{ mt: 3 }}>
               <Box>
                 <HoverRating

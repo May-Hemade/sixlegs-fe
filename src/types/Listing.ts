@@ -1,3 +1,4 @@
+import { Booking } from "./Booking"
 import User from "./User"
 
 export default interface Listing {
@@ -10,4 +11,5 @@ export default interface Listing {
   listingName: string
   pricePerNight: number
   owner?: User
+  bookings?: Booking[]
 }
