@@ -6,6 +6,8 @@ import {
   ButtonBase,
   CircularProgress,
   CssBaseline,
+  ImageList,
+  ImageListItem,
   Stack,
   Typography,
 } from "@mui/material"
@@ -21,6 +23,7 @@ import {
   addListing,
   clearListingById,
   getListingById,
+  setListingById,
   updateListingById,
 } from "../redux/reducers/listingSlice"
 import Listing from "../types/Listing"
@@ -52,6 +55,7 @@ export default function EditListing() {
       pricePerNight: parseFloat(data.get("pricePerNight")!.toString()),
       listingName: data.get("listingName")!.toString(),
       description: data.get("description")!.toString(),
+      images: listingState.listingById?.images ?? [],
     }
 
     if (!params.id) {
@@ -129,6 +133,36 @@ export default function EditListing() {
               />
             </Stack>
 
+            <Box sx={{ my: 4 }}>
+              {listingState.listingById &&
+                listingState.listingById.images &&
+                listingState.listingById.images.length > 0 && (
+                  <ImageList
+                    sx={{ width: 500, height: 250 }}
+                    cols={3}
+                    rowHeight={164}
+                  >
+                    {listingState.listingById.images.map((image) => (
+                      <ImageListItem key={image.id}>
+                        <img
+                          src={`${image.url}?w=164&h=164&fit=crop&auto=format`}
+                          srcSet={`${image.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                          loading="lazy"
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                )}
+
+              <UploadImageDialog
+                url={`${process.env.REACT_APP_BE_URL}/listing/${listingState.listingById?.id}/images`}
+                property="listingImage"
+                buttonTitle="Upload Image"
+                onSuccess={(listing) => {
+                  dispatch(setListingById(listing))
+                }}
+              ></UploadImageDialog>
+            </Box>
             <Button
               type="submit"
               fullWidth

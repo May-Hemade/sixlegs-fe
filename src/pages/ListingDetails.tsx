@@ -6,6 +6,8 @@ import {
   Container,
   Divider,
   Grid,
+  ImageList,
+  ImageListItem,
   Paper,
   Stack,
   TextField,
@@ -50,6 +52,41 @@ function ListingDetails() {
     dates.push(ranges[0].endDate?.getTime() ?? 0)
     dispatch(setDateRange(dates))
   }
+
+  const imagesGrid = [
+    {
+      cols: 2,
+      rows: 2,
+    },
+    {
+      cols: 1,
+      rows: 1,
+    },
+    {
+      cols: 1,
+      rows: 1,
+    },
+    {
+      cols: 2,
+      rows: 1,
+    },
+    {
+      cols: 2,
+      rows: 1,
+    },
+    {
+      cols: 2,
+      rows: 2,
+    },
+    {
+      cols: 1,
+      rows: 1,
+    },
+    {
+      cols: 1,
+      rows: 1,
+    },
+  ]
 
   const handleSubmitReview = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -144,7 +181,7 @@ function ListingDetails() {
                     {listingState.listingById?.listingName}
                   </Typography>
                 </Box>
-                <Grid container>
+                <Grid container spacing={30}>
                   <Grid item xs={6}>
                     <Stack spacing={2} sx={{ mt: 3 }}>
                       <div>
@@ -208,7 +245,28 @@ function ListingDetails() {
                 </Box>
               </Stack>
             </Paper>
-
+            {listingState.listingById &&
+              listingState.listingById.images &&
+              listingState.listingById.images.length > 0 && (
+                <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
+                  <ImageList
+                    sx={{ width: "100%", height: 400 }}
+                    variant="quilted"
+                    cols={4}
+                    rowHeight={121}
+                  >
+                    {listingState.listingById.images.map((image, index) => (
+                      <ImageListItem
+                        key={image.id}
+                        rows={imagesGrid[index % 8].rows}
+                        cols={imagesGrid[index % 8].cols}
+                      >
+                        <img src={image.url} loading="lazy" />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                </Paper>
+              )}
             <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
               <Stack sx={{ p: 3 }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>

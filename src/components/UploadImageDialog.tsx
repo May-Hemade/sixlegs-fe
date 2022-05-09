@@ -19,7 +19,9 @@ export default function UploadImageDialog(props: UploadImageProps) {
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>Change Image</Button>
+      <Button onClick={handleClickOpen}>
+        {props.buttonTitle ?? "Change Image"}
+      </Button>
       <Dialog
         open={open}
         onClose={handleClose}

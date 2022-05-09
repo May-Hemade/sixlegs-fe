@@ -19,6 +19,7 @@ interface HoverRatingProps {
   showLabel: boolean
   value: number | null
   readOnly: boolean
+  size?: "small" | "medium" | "large"
   onChange?: (rating: number | null) => void
 }
 
@@ -35,6 +36,7 @@ export default function HoverRating(props: HoverRatingProps) {
       }}
     >
       <Rating
+        size={props.size ?? "medium"}
         name="hover-feedback"
         value={value}
         precision={1}

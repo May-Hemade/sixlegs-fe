@@ -5,6 +5,7 @@ import { useAppSelector } from "../redux/hooks"
 export interface UploadImageProps {
   url: string
   property: string
+  buttonTitle?: string
   onSuccess: (result: any) => void
 }
 

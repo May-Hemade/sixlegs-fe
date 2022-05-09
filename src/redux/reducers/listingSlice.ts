@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { add } from "lodash"
+import { act } from "react-dom/test-utils"
 import ChangePasswordData from "../../types/ChangePasswordData"
 import Listing from "../../types/Listing"
 import User from "../../types/User"
@@ -161,6 +162,9 @@ export const listingSlice = createSlice({
     clearListingById: (state) => {
       state.listingById = undefined
     },
+    setListingById: (state, action: PayloadAction<Listing>) => {
+      state.listingById = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(addListing.pending, (state) => {
@@ -219,6 +223,6 @@ export const listingSlice = createSlice({
   },
 })
 
-export const { clearListingById } = listingSlice.actions
+export const { clearListingById, setListingById } = listingSlice.actions
 
 export default listingSlice.reducer

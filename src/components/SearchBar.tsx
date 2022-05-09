@@ -1,6 +1,8 @@
 import {
+  Button,
   Container,
   Dialog,
+  DialogActions,
   DialogContent,
   Fab,
   Stack,
@@ -122,6 +124,11 @@ function Home() {
                 showPreview={true}
                 dateDisplayFormat={"dd/MM/yyyy"}
               />
+              <DialogActions>
+                <Button onClick={closeDatePicker} autoFocus>
+                  Done
+                </Button>
+              </DialogActions>
             </DialogContent>
           </Dialog>
         </Stack>
