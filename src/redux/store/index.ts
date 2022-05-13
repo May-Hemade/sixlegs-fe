@@ -21,6 +21,7 @@ import searchReducer from "../reducers/searchSlice"
 import reviewReducer from "../reducers/reviewSlice"
 import bookingReducer from "../reducers/bookingSlice"
 import productReducer from "../reducers/productSlice"
+import chatReducer from "../reducers/chatSlice"
 
 import {
   configureStore,
@@ -54,6 +55,7 @@ const bigReducer = combineReducers({
   review: reviewReducer,
   booking: bookingReducer,
   product: productReducer,
+  chat: chatReducer,
 })
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {

@@ -1,8 +1,18 @@
-import { Box, CircularProgress, Container } from "@mui/material"
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Icon,
+  IconButton,
+  Typography,
+} from "@mui/material"
 import { useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
-import { BookinState, getListingBookings } from "../redux/reducers/bookingSlice"
+import {
+  BookingState,
+  getListingBookings,
+} from "../redux/reducers/bookingSlice"
 
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
@@ -13,10 +23,15 @@ import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
 import { differenceInCalendarDays, format } from "date-fns"
 import { Booking } from "../types/Booking"
+import { Forum } from "@mui/icons-material"
+import User from "../types/User"
+import { setCurrentChatUser } from "../redux/reducers/chatSlice"
+import ChatButton from "../components/ChatButton"
 
 function ListingBookings() {
   const bookingState = useAppSelector((state) => state.booking)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const { id } = useParams()
   const listingId = parseInt(id ?? "0")
 
@@ -33,6 +48,11 @@ function ListingBookings() {
     )
   }
 
+  const handleChatClick = (user: User) => {
+    dispatch(setCurrentChatUser(user))
+    navigate("/inbox")
+  }
+
   useEffect(() => {
     console.log(listingId)
 
@@ -46,6 +66,18 @@ function ListingBookings() {
           <CircularProgress color="secondary" />
         </Box>
       )}
+
+      {!bookingState.isGetListingBookingsError &&
+        !bookingState.isGetListingBookingsLoading &&
+        bookingState.listingBookings && (
+          <Box sx={{ p: 3 }}>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Typography component="span" variant="h6">
+                {bookingState.listingBookings?.listingName}
+              </Typography>
+            </Box>
+          </Box>
+        )}
 
       {!bookingState.isGetListingBookingsError &&
         !bookingState.isGetListingBookingsLoading &&
@@ -78,6 +110,7 @@ function ListingBookings() {
                   >
                     <TableCell component="th" scope="row">
                       {booking.owner.firstName} {booking.owner.lastName}
+                      <ChatButton user={booking.owner} />
                     </TableCell>
                     <TableCell align="right">
                       {format(new Date(booking.checkInDate), "EEE d MMM yyyy")}

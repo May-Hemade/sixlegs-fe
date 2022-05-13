@@ -155,6 +155,35 @@ export const getListingById = createAsyncThunk<
   }
 )
 
+export const deleteImage = createAsyncThunk<
+  number,
+  number,
+  {
+    state: RootState
+  }
+>("listing/deleteImage", async (imageId, { getState, rejectWithValue }) => {
+  try {
+    let response = await fetch(
+      `${process.env.REACT_APP_BE_URL}/listing/images/${imageId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${getState().user.token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+
+    if (response.ok) {
+      return imageId
+    } else {
+      return rejectWithValue("error happened fetching the listing")
+    }
+  } catch (error) {
+    return rejectWithValue(error)
+  }
+})
+
 export const listingSlice = createSlice({
   name: "lisitng",
   initialState,
@@ -219,6 +248,17 @@ export const listingSlice = createSlice({
     builder.addCase(updateListingById.rejected, (state) => {
       state.isUpdateByIdError = true
       state.isUpdateByIdLoading = false
+    })
+
+    builder.addCase(deleteImage.fulfilled, (state, action) => {
+      if (state.listingById) {
+        const images = state.listingById.images
+        if (images) {
+          const newImages = images.filter((img) => img.id === action.payload)
+          const newListing = { ...state.listingById, images: newImages }
+          state.listingById = newListing
+        }
+      }
     })
   },
 })

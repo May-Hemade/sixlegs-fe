@@ -29,17 +29,19 @@ import {
 import CheckLoggedIn from "../components/CheckLoggedIn"
 import UserReview from "../components/UserReview"
 import { SendBooking } from "../types/SendBooking"
-import { createBooking } from "../redux/reducers/bookingSlice"
-import { differenceInCalendarDays } from "date-fns"
+import { createBooking, getAlreadyBooked } from "../redux/reducers/bookingSlice"
+import { addDays, differenceInCalendarDays } from "date-fns"
 import ConfirmationDialog from "../components/ConfirmationDialog"
 import AppSnackbar from "../components/AppSnackbar"
 import { showErrorSnackbar } from "../redux/reducers/snackbarSlice"
 import { _renderMatches } from "react-router/lib/hooks"
+import ChatButton from "../components/ChatButton"
 
 function ListingDetails() {
   const searchState = useAppSelector((state) => state.search)
   const listingState = useAppSelector((state) => state.listing)
   const reviewState = useAppSelector((state) => state.review)
+  const bookingState = useAppSelector((state) => state.booking)
   const [ratingValue, setRatingValue] = useState<number | null>(0)
   const [confirmOpen, setConfirmOpen] = useState(false)
   const { id } = useParams()
@@ -87,6 +89,23 @@ function ListingDetails() {
       rows: 1,
     },
   ]
+
+  const checkBookedDates = () => {
+    const dateArray: Date[] = []
+    if (bookingState.alreadyBooked) {
+      bookingState.alreadyBooked.forEach((booking) => {
+        const start = new Date(booking.checkInDate)
+        const end = new Date(booking.checkOutDate)
+        let current = start
+        while (current <= end) {
+          dateArray.push(new Date(current))
+          current = addDays(current, 1)
+        }
+      })
+    }
+
+    return dateArray
+  }
 
   const handleSubmitReview = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -154,6 +173,7 @@ function ListingDetails() {
     if (listingId) {
       dispatch(getListingById(listingId))
       dispatch(getReviews(listingId))
+      dispatch(getAlreadyBooked(listingId))
     }
   }, [])
 
@@ -242,6 +262,7 @@ function ListingDetails() {
                     {listingState.listingById?.owner?.firstName}
                     {listingState.listingById?.owner?.lastName}
                   </Typography>
+                  <ChatButton user={listingState.listingById!.owner!} />
                 </Box>
               </Stack>
             </Paper>
@@ -286,6 +307,7 @@ function ListingDetails() {
                     showPreview={true}
                     months={2}
                     dateDisplayFormat={"dd/MM/yyyy"}
+                    disabledDates={checkBookedDates()}
                   />
                 </Box>
 

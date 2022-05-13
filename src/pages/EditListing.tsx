@@ -6,6 +6,7 @@ import {
   ButtonBase,
   CircularProgress,
   CssBaseline,
+  IconButton,
   ImageList,
   ImageListItem,
   Stack,
@@ -22,12 +23,14 @@ import { useEffect, useState } from "react"
 import {
   addListing,
   clearListingById,
+  deleteImage,
   getListingById,
   setListingById,
   updateListingById,
 } from "../redux/reducers/listingSlice"
 import Listing from "../types/Listing"
 import AppSnackbar from "../components/AppSnackbar"
+import { HighlightOff } from "@mui/icons-material"
 
 export default function EditListing() {
   const listingState = useAppSelector((state) => state.listing)
@@ -144,11 +147,31 @@ export default function EditListing() {
                   >
                     {listingState.listingById.images.map((image) => (
                       <ImageListItem key={image.id}>
-                        <img
-                          src={`${image.url}?w=164&h=164&fit=crop&auto=format`}
-                          srcSet={`${image.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                          loading="lazy"
-                        />
+                        <Box
+                          sx={{ position: "relative", width: 150, height: 150 }}
+                        >
+                          <img
+                            style={{
+                              width: 150,
+                              height: 150,
+                              objectFit: "cover",
+                            }}
+                            src={image.url}
+                            srcSet={image.url}
+                            loading="lazy"
+                          />
+                          <IconButton
+                            onClick={() => dispatch(deleteImage(image.id))}
+                            sx={{
+                              position: "absolute",
+                              top: 0,
+                              right: 0,
+                              zIndex: 1,
+                            }}
+                          >
+                            <HighlightOff htmlColor="grey" />
+                          </IconButton>
+                        </Box>
                       </ImageListItem>
                     ))}
                   </ImageList>

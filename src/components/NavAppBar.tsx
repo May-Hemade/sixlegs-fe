@@ -31,6 +31,7 @@ export default function NavAppBar() {
             <Button component={RouterLink} to="/" color="inherit" sx={{ p: 0 }}>
               <Box component="img" src="/logo.png" sx={{ height: 32 }} />
             </Button>
+            <Typography fontFamily="monospace">SIX LEGS</Typography>
           </Box>
 
           <Button component={RouterLink} to="/profile" color="inherit">

@@ -19,6 +19,7 @@ import Home from "./pages/Home"
 import ListingDetails from "./pages/ListingDetails"
 import ListingBookings from "./pages/ListingBookings"
 import { orange, purple, yellow } from "@mui/material/colors"
+import Inbox from "./pages/Inbox"
 
 const theme = createTheme({
   palette: {
@@ -57,6 +58,7 @@ function App() {
               <Route path="/edit-pet/:id" element={<EditPet />} />
               <Route path="/add-pet" element={<EditPet />} />
               <Route path="/listing-details/:id" element={<ListingDetails />} />
+              <Route path="/inbox" element={<Inbox />} />
             </Route>
           </Routes>
         </div>

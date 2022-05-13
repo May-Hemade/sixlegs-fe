@@ -6,21 +6,27 @@ import { SendBooking } from "../../types/SendBooking"
 import { RootState } from "../store"
 import { showErrorSnackbar, showSuccessSnackbar } from "./snackbarSlice"
 
-export interface BookinState {
+export interface BookingState {
   isCreateLoading: boolean
   isCreateError: boolean
 
   listingBookings?: Listing
   isGetListingBookingsLoading: boolean
   isGetListingBookingsError: boolean
+  isLoadingBooked: boolean
+  isErrorBooked: boolean
+  alreadyBooked: Booking[]
 }
 
-const initialState: BookinState = {
+const initialState: BookingState = {
   isCreateError: false,
   isCreateLoading: false,
   listingBookings: undefined,
   isGetListingBookingsLoading: false,
   isGetListingBookingsError: false,
+  isLoadingBooked: false,
+  isErrorBooked: false,
+  alreadyBooked: [],
 }
 
 export const createBooking = createAsyncThunk<
@@ -86,6 +92,34 @@ export const getListingBookings = createAsyncThunk<
   }
 )
 
+export const getAlreadyBooked = createAsyncThunk<
+  Booking[],
+  number,
+  { state: RootState }
+>(
+  "booking/getAlreadyBooked",
+  async (listingId, { getState, rejectWithValue }) => {
+    try {
+      let response = await fetch(
+        `${process.env.REACT_APP_BE_URL}/listing/${listingId}/alreadyBooked`,
+        {
+          headers: {
+            Authorization: `Bearer ${getState().user.token}`,
+          },
+        }
+      )
+      if (response.ok) {
+        let result = await response.json()
+        return result
+      } else {
+        return rejectWithValue("Couldn't get bookings")
+      }
+    } catch (error) {
+      return rejectWithValue(error)
+    }
+  }
+)
+
 export const bookingSlice = createSlice({
   name: "booking",
   initialState,
@@ -105,17 +139,31 @@ export const bookingSlice = createSlice({
     })
 
     builder.addCase(getListingBookings.pending, (state) => {
-      state.isCreateError = false
-      state.isCreateLoading = true
+      state.isGetListingBookingsLoading = false
+      state.isGetListingBookingsError = true
     })
     builder.addCase(getListingBookings.fulfilled, (state, action) => {
       state.listingBookings = action.payload
-      state.isCreateError = false
-      state.isCreateLoading = false
+      state.isGetListingBookingsLoading = false
+      state.isGetListingBookingsError = false
     })
     builder.addCase(getListingBookings.rejected, (state) => {
       state.isGetListingBookingsLoading = false
       state.isGetListingBookingsError = true
+    })
+
+    builder.addCase(getAlreadyBooked.pending, (state) => {
+      state.isErrorBooked = false
+      state.isLoadingBooked = true
+    })
+    builder.addCase(getAlreadyBooked.fulfilled, (state, action) => {
+      state.alreadyBooked = action.payload
+      state.isErrorBooked = false
+      state.isLoadingBooked = false
+    })
+    builder.addCase(getAlreadyBooked.rejected, (state) => {
+      state.isLoadingBooked = false
+      state.isErrorBooked = true
     })
   },
 })
