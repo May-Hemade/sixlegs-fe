@@ -1,9 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { add } from "lodash"
-import { act } from "react-dom/test-utils"
-import ChangePasswordData from "../../types/ChangePasswordData"
 import Listing from "../../types/Listing"
-import User from "../../types/User"
 import { RootState } from "../store"
 import { showErrorSnackbar, showSuccessSnackbar } from "./snackbarSlice"
 

@@ -1,9 +1,8 @@
 import Box from "@mui/material/Box"
 import TextField from "@mui/material/TextField"
 import {
-  Avatar,
+  Alert,
   Button,
-  ButtonBase,
   CircularProgress,
   CssBaseline,
   IconButton,
@@ -13,7 +12,7 @@ import {
   Typography,
 } from "@mui/material"
 
-import { Link as RouterLink, useParams } from "react-router-dom"
+import { useParams, useSearchParams } from "react-router-dom"
 import { Container } from "@mui/material"
 import UploadImageDialog from "../components/UploadImageDialog"
 
@@ -37,6 +36,9 @@ export default function EditListing() {
   const [title, setTitle] = useState("")
   const dispatch = useAppDispatch()
   const params = useParams()
+  const [queryParams] = useSearchParams()
+  const status = queryParams.get("status")
+  const isEditMode = params.id
 
   useEffect(() => {
     if (params.id) {
@@ -73,6 +75,12 @@ export default function EditListing() {
       <CssBaseline />
 
       <AppSnackbar />
+
+      {status === "created" && (
+        <Box sx={{ py: 2 }}>
+          <Alert color="success">Listing created successfully!</Alert>
+        </Box>
+      )}
 
       {listingState.isGetByIdLoading && (
         <Box sx={{ p: 5, display: "flex", justifyContent: "center" }}>
@@ -177,14 +185,16 @@ export default function EditListing() {
                   </ImageList>
                 )}
 
-              <UploadImageDialog
-                url={`${process.env.REACT_APP_BE_URL}/listing/${listingState.listingById?.id}/images`}
-                property="listingImage"
-                buttonTitle="Upload Image"
-                onSuccess={(listing) => {
-                  dispatch(setListingById(listing))
-                }}
-              ></UploadImageDialog>
+              {isEditMode && (
+                <UploadImageDialog
+                  url={`${process.env.REACT_APP_BE_URL}/listing/${listingState.listingById?.id}/images`}
+                  property="listingImage"
+                  buttonTitle="Upload Image"
+                  onSuccess={(listing) => {
+                    dispatch(setListingById(listing))
+                  }}
+                />
+              )}
             </Box>
             <Button
               type="submit"

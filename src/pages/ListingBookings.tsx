@@ -1,5 +1,7 @@
 import {
   Box,
+  Button,
+  ButtonBase,
   CircularProgress,
   Container,
   Icon,
@@ -27,6 +29,7 @@ import { Forum } from "@mui/icons-material"
 import User from "../types/User"
 import { setCurrentChatUser } from "../redux/reducers/chatSlice"
 import ChatButton from "../components/ChatButton"
+import { Link as RouterLink } from "react-router-dom"
 
 function ListingBookings() {
   const bookingState = useAppSelector((state) => state.booking)
@@ -103,10 +106,17 @@ function ListingBookings() {
                     key={booking.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
-                      {booking.owner.firstName} {booking.owner.lastName}
-                      <ChatButton user={booking.owner} />
-                    </TableCell>
+                    <Button
+                      component={RouterLink}
+                      to="/profile"
+                      color="inherit"
+                      sx={{ p: 0 }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {booking.owner.firstName} {booking.owner.lastName}
+                        <ChatButton user={booking.owner} />
+                      </TableCell>
+                    </Button>
                     <TableCell align="right">
                       {format(new Date(booking.checkInDate), "EEE d MMM yyyy")}
                     </TableCell>
