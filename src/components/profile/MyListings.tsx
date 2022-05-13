@@ -52,11 +52,13 @@ export default function MyListings() {
               ))}
             </Stack>
           )}
-          {listingState.myListings.length === 0 && !listingState.isGetError && (
-            <Box sx={{ p: 2, textAlign: "center" }}>
-              <Typography> Add a Listing to becaome a host :) </Typography>
-            </Box>
-          )}
+          {listingState.myListings.length === 0 &&
+            !listingState.isGetError &&
+            !listingState.isGetLoading && (
+              <Box sx={{ p: 2, textAlign: "center" }}>
+                <Typography> Add a Listing to becaome a host :) </Typography>
+              </Box>
+            )}
         </Box>
       </Paper>
     </Container>
