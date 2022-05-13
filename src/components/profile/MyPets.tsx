@@ -30,28 +30,38 @@ export default function MyPets() {
             <Add />
           </IconButton>
         </Box>
-        <Grid container sx={{ p: 3, m: 3 }}>
-          {petState.myPets.map((pet) => (
-            <Stack key={pet.id} sx={{ textAlign: "center", p: 2 }}>
-              <ButtonBase
-                sx={{ width: 80, height: 80 }}
-                href={`/edit-pet/${pet.id}`}
-              >
-                <Avatar src={pet.avatar} sx={{ width: 80, height: 80 }} />
-              </ButtonBase>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                component="div"
-                sx={{ mt: 1 }}
-              >
-                {pet.petName}
-              </Typography>
-            </Stack>
-          ))}
+        {petState.myPets.length === 0 &&
+          !petState.isGetError &&
+          !petState.isGetLoading && (
+            <Box sx={{ p: 2, textAlign: "center" }}>
+              <Typography> Please add your pet</Typography>
+            </Box>
+          )}
 
-          <Grid item></Grid>
-        </Grid>
+        {petState.myPets.length > 0 && (
+          <Grid container sx={{ p: 3, m: 3 }}>
+            {petState.myPets.map((pet) => (
+              <Stack key={pet.id} sx={{ textAlign: "center", p: 2 }}>
+                <ButtonBase
+                  sx={{ width: 80, height: 80 }}
+                  href={`/edit-pet/${pet.id}`}
+                >
+                  <Avatar src={pet.avatar} sx={{ width: 80, height: 80 }} />
+                </ButtonBase>
+                <Typography
+                  gutterBottom
+                  variant="subtitle1"
+                  component="div"
+                  sx={{ mt: 1 }}
+                >
+                  {pet.petName}
+                </Typography>
+              </Stack>
+            ))}
+
+            <Grid item></Grid>
+          </Grid>
+        )}
       </Paper>
     </Container>
   )

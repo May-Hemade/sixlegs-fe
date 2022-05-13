@@ -53,9 +53,9 @@ export default function MyListings() {
             </Stack>
           )}
           {listingState.myListings.length === 0 && !listingState.isGetError && (
-            <Typography variant="body1">
-              Add a Listing to become a host
-            </Typography>
+            <Box sx={{ p: 2, textAlign: "center" }}>
+              <Typography> Add a Listing to becaome a host :) </Typography>
+            </Box>
           )}
         </Box>
       </Paper>

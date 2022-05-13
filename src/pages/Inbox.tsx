@@ -1,3 +1,4 @@
+import { Container } from "@mui/material"
 import { Box } from "@mui/system"
 import React from "react"
 import { useEffect } from "react"
@@ -60,7 +61,9 @@ function Inbox() {
 
   return (
     <div>
-      <Box sx={{ width: 1000, height: 500 }} ref={talkjsContainer}></Box>
+      <Container sx={{ m: 5 }}>
+        <Box sx={{ width: 1000, height: 500 }} ref={talkjsContainer}></Box>
+      </Container>
     </div>
   )
 }

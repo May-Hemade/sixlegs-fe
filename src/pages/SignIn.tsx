@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { FaGoogle } from "react-icons/fa"
 import { useAppDispatch } from "../redux/hooks"
-import { saveToken } from "../redux/reducers/userSlice"
+import { saveToken, setProfile } from "../redux/reducers/userSlice"
 
 function Copyright(props: any) {
   return (
@@ -62,6 +62,7 @@ export default function SignIn() {
         let result = await res.json()
 
         dispatch(saveToken(result.accessToken))
+        dispatch(setProfile(result.profile))
 
         navigate("/")
         console.log("Successfully logged in!")

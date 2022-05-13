@@ -192,208 +192,224 @@ function ListingDetails() {
           </Box>
         )}
 
-        {!listingState.isGetByIdLoading && !listingState.isGetByIdError && (
-          <Box sx={{ p: 3 }}>
-            <Paper elevation={3} sx={{ p: 3 }}>
-              <Stack sx={{ p: 3 }}>
-                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                  <Typography component="span" variant="h6">
-                    {listingState.listingById?.listingName}
-                  </Typography>
-                </Box>
-                <Grid container spacing={30}>
-                  <Grid item xs={6}>
-                    <Stack spacing={2} sx={{ mt: 3 }}>
-                      <div>
-                        <Typography variant="overline" gutterBottom>
-                          Address
-                        </Typography>
-                        <Typography variant="body1">
-                          {listingState.listingById?.address}
-                        </Typography>
-                      </div>
-
-                      <div>
-                        <Typography variant="overline" gutterBottom>
-                          Description
-                        </Typography>
-                        <Typography variant="body1">
-                          {listingState.listingById?.description}
-                        </Typography>
-                      </div>
-                    </Stack>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Stack spacing={2} sx={{ mt: 3 }}>
-                      <Box>
-                        <HoverRating
-                          showLabel={false}
-                          value={5}
-                          readOnly={true}
-                        />
-                      </Box>
-                      <Box>
-                        <Typography variant="overline" gutterBottom>
-                          Price
-                        </Typography>
-                        <Typography variant="body1">
-                          {listingState.listingById?.pricePerNight} $
-                        </Typography>
-                      </Box>
-                    </Stack>
-                  </Grid>
-                </Grid>
-
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ mt: 3, fontWeight: "600" }}
-                >
-                  Hosted by
-                </Typography>
-                <Box sx={{ py: 2, display: "flex", alignItems: "center" }}>
-                  <Avatar
-                    className="avatar-profile"
-                    sx={{ width: 40, height: 40 }}
-                    src={listingState.listingById?.owner?.avatar}
-                  />
-
-                  <Typography component="span" variant="body2" sx={{ ml: 2 }}>
-                    {listingState.listingById?.owner?.firstName}
-                    {listingState.listingById?.owner?.lastName}
-                  </Typography>
-                  <ChatButton user={listingState.listingById!.owner!} />
-                </Box>
-              </Stack>
-            </Paper>
-            {listingState.listingById &&
-              listingState.listingById.images &&
-              listingState.listingById.images.length > 0 && (
-                <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
-                  <ImageList
-                    sx={{ width: "100%", height: 400 }}
-                    variant="quilted"
-                    cols={4}
-                    rowHeight={121}
+        {!listingState.isGetByIdLoading &&
+          !listingState.isGetByIdError &&
+          listingState.listingById && (
+            <Box sx={{ p: 3 }}>
+              <Paper elevation={3} sx={{ p: 3 }}>
+                <Stack sx={{ p: 3 }}>
+                  <Box
+                    sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    {listingState.listingById.images.map((image, index) => (
-                      <ImageListItem
-                        key={image.id}
-                        rows={imagesGrid[index % 8].rows}
-                        cols={imagesGrid[index % 8].cols}
-                      >
-                        <img src={image.url} loading="lazy" />
-                      </ImageListItem>
-                    ))}
-                  </ImageList>
-                </Paper>
-              )}
-            <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
-              <Stack sx={{ p: 3 }}>
-                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                  <Typography component="span" variant="h6">
-                    Make a Booking
-                  </Typography>
-                </Box>
-                <Box sx={{ mx: "auto" }}>
-                  <DateRange
-                    onChange={(item) => handleDateRange([item.selection])}
-                    moveRangeOnFirstSelection={false}
-                    direction="horizontal"
-                    ranges={dateRanges()}
-                    fixedHeight={true}
-                    minDate={new Date()}
-                    showMonthAndYearPickers={true}
-                    showPreview={true}
-                    months={2}
-                    dateDisplayFormat={"dd/MM/yyyy"}
-                    disabledDates={checkBookedDates()}
-                  />
-                </Box>
+                    <Typography component="span" variant="h6">
+                      {listingState.listingById?.listingName}
+                    </Typography>
+                  </Box>
+                  <Grid container spacing={30}>
+                    <Grid item xs={6}>
+                      <Stack spacing={2} sx={{ mt: 3 }}>
+                        <div>
+                          <Typography variant="overline" gutterBottom>
+                            Address
+                          </Typography>
+                          <Typography variant="body1">
+                            {listingState.listingById?.address}
+                          </Typography>
+                        </div>
 
-                <Stack spacing={1}>
-                  <Box>
-                    <Typography variant="overline">Number of Nights</Typography>
-                    <Typography variant="body2">
-                      {getNumberOfNights()}
+                        <div>
+                          <Typography variant="overline" gutterBottom>
+                            Description
+                          </Typography>
+                          <Typography variant="body1">
+                            {listingState.listingById?.description}
+                          </Typography>
+                        </div>
+                      </Stack>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Stack spacing={2} sx={{ mt: 3 }}>
+                        <Box>
+                          <HoverRating
+                            showLabel={false}
+                            value={5}
+                            readOnly={true}
+                          />
+                        </Box>
+                        <Box>
+                          <Typography variant="overline" gutterBottom>
+                            Price
+                          </Typography>
+                          <Typography variant="body1">
+                            {listingState.listingById?.pricePerNight} $
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    </Grid>
+                  </Grid>
+
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    sx={{ mt: 3, fontWeight: "600" }}
+                  >
+                    Hosted by
+                  </Typography>
+                  <Box sx={{ py: 2, display: "flex", alignItems: "center" }}>
+                    <Avatar
+                      className="avatar-profile"
+                      sx={{ width: 40, height: 40 }}
+                      src={listingState.listingById?.owner?.avatar}
+                    />
+                    <Typography component="span" variant="body2" sx={{ ml: 2 }}>
+                      {listingState.listingById?.owner?.firstName}
+                      {listingState.listingById?.owner?.lastName}
                     </Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="overline">Price per night</Typography>
-                    <Typography variant="body2">
-                      {listingState.listingById?.pricePerNight}$
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="overline">Total Price</Typography>
-                    <Typography variant="body2">{getTotalPrice()}$</Typography>
+                    <ChatButton user={listingState.listingById!.owner!} />
                   </Box>
                 </Stack>
+              </Paper>
+              {listingState.listingById &&
+                listingState.listingById.images &&
+                listingState.listingById.images.length > 0 && (
+                  <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
+                    <ImageList
+                      sx={{ width: "100%", height: 400 }}
+                      variant="quilted"
+                      cols={4}
+                      rowHeight={121}
+                    >
+                      {listingState.listingById.images.map((image, index) => (
+                        <ImageListItem
+                          key={image.id}
+                          rows={imagesGrid[index % 8].rows}
+                          cols={imagesGrid[index % 8].cols}
+                        >
+                          <img src={image.url} loading="lazy" />
+                        </ImageListItem>
+                      ))}
+                    </ImageList>
+                  </Paper>
+                )}
+              <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
+                <Stack sx={{ p: 3 }}>
+                  <Box
+                    sx={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <Typography component="span" variant="h6">
+                      Make a Booking
+                    </Typography>
+                  </Box>
+                  <Box sx={{ mx: "auto" }}>
+                    <DateRange
+                      onChange={(item) => handleDateRange([item.selection])}
+                      moveRangeOnFirstSelection={false}
+                      direction="horizontal"
+                      ranges={dateRanges()}
+                      fixedHeight={true}
+                      minDate={new Date()}
+                      showMonthAndYearPickers={true}
+                      showPreview={true}
+                      months={2}
+                      dateDisplayFormat={"dd/MM/yyyy"}
+                      disabledDates={checkBookedDates()}
+                    />
+                  </Box>
 
-                <Button
-                  variant="contained"
-                  sx={{ mt: 2 }}
-                  onClick={() => setConfirmOpen(true)}
-                >
-                  Book Now
-                </Button>
+                  <Stack spacing={1}>
+                    <Box>
+                      <Typography variant="overline">
+                        Number of Nights
+                      </Typography>
+                      <Typography variant="body2">
+                        {getNumberOfNights()}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="overline">
+                        Price per night
+                      </Typography>
+                      <Typography variant="body2">
+                        {listingState.listingById?.pricePerNight}$
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="overline">Total Price</Typography>
+                      <Typography variant="body2">
+                        {getTotalPrice()}$
+                      </Typography>
+                    </Box>
+                  </Stack>
 
-                <ConfirmationDialog
-                  open={confirmOpen}
-                  message={getConfirmBookingMessage()}
-                  onClose={bookingConfirm}
-                />
-              </Stack>
-            </Paper>
-
-            <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
-              <Stack sx={{ p: 3 }}>
-                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                  <Typography component="span" variant="h6">
-                    Reviews
-                  </Typography>
-                </Box>
-                <Box
-                  component="form"
-                  sx={{ mt: 2 }}
-                  onSubmit={handleSubmitReview}
-                >
-                  <HoverRating
-                    showLabel={true}
-                    value={reviewState.currentRating}
-                    readOnly={false}
-                    onChange={setRatingValue}
-                  />
-
-                  <TextField
-                    multiline
-                    minRows={2}
-                    maxRows={5}
-                    name="comment"
-                    label="Comment"
-                    value={reviewState.currentComment}
-                    onChange={(e) => {
-                      dispatch(setCurrentComment(e.target.value))
-                    }}
-                    fullWidth
-                  />
-
-                  <Button type="submit" variant="contained" sx={{ mt: 1 }}>
-                    Leave a review
+                  <Button
+                    variant="contained"
+                    sx={{ mt: 2 }}
+                    onClick={() => setConfirmOpen(true)}
+                  >
+                    Book Now
                   </Button>
-                </Box>
 
-                <Divider sx={{ my: 2 }} />
-
-                <Stack spacing={2} divider={<Divider />}>
-                  {reviewState.listingReviews.map((listingReview) => (
-                    <UserReview review={listingReview} key={listingReview.id} />
-                  ))}
+                  <ConfirmationDialog
+                    open={confirmOpen}
+                    message={getConfirmBookingMessage()}
+                    onClose={bookingConfirm}
+                  />
                 </Stack>
-              </Stack>
-            </Paper>
-          </Box>
-        )}
+              </Paper>
+
+              <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
+                <Stack sx={{ p: 3 }}>
+                  <Box
+                    sx={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <Typography component="span" variant="h6">
+                      Reviews
+                    </Typography>
+                  </Box>
+                  <Box
+                    component="form"
+                    sx={{ mt: 2 }}
+                    onSubmit={handleSubmitReview}
+                  >
+                    <HoverRating
+                      showLabel={true}
+                      value={reviewState.currentRating}
+                      readOnly={false}
+                      onChange={setRatingValue}
+                    />
+
+                    <TextField
+                      multiline
+                      minRows={2}
+                      maxRows={5}
+                      name="comment"
+                      label="Comment"
+                      value={reviewState.currentComment}
+                      onChange={(e) => {
+                        dispatch(setCurrentComment(e.target.value))
+                      }}
+                      fullWidth
+                    />
+
+                    <Button type="submit" variant="contained" sx={{ mt: 1 }}>
+                      Leave a review
+                    </Button>
+                  </Box>
+
+                  <Divider sx={{ my: 2 }} />
+
+                  <Stack spacing={2} divider={<Divider />}>
+                    {reviewState.listingReviews.map((listingReview) => (
+                      <UserReview
+                        review={listingReview}
+                        key={listingReview.id}
+                      />
+                    ))}
+                  </Stack>
+                </Stack>
+              </Paper>
+            </Box>
+          )}
       </Container>
     </div>
   )

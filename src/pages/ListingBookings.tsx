@@ -48,11 +48,6 @@ function ListingBookings() {
     )
   }
 
-  const handleChatClick = (user: User) => {
-    dispatch(setCurrentChatUser(user))
-    navigate("/inbox")
-  }
-
   useEffect(() => {
     console.log(listingId)
 

@@ -19,7 +19,6 @@ import { format } from "date-fns"
 import { Link as RouterLink } from "react-router-dom"
 import { Search } from "@mui/icons-material"
 import { setDateRange } from "../redux/reducers/searchSlice"
-import CheckLoggedIn from "./CheckLoggedIn"
 
 function Home() {
   const searchState = useAppSelector((state) => state.search)
@@ -34,8 +33,6 @@ function Home() {
       },
     ]
   }
-
-  console.log(dateRanges())
 
   const handleDateRange = (ranges: Range[]) => {
     const dates: number[] = []
@@ -63,7 +60,6 @@ function Home() {
 
   return (
     <div>
-      <CheckLoggedIn />
       <Container>
         <Stack
           direction="row"
