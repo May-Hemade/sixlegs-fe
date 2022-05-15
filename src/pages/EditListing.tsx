@@ -30,6 +30,8 @@ import {
 import Listing from "../types/Listing"
 import AppSnackbar from "../components/AppSnackbar"
 import { HighlightOff } from "@mui/icons-material"
+import MapPicker from "../components/MapPicker"
+import { LatLng } from "leaflet"
 
 export default function EditListing() {
   const listingState = useAppSelector((state) => state.listing)
@@ -58,6 +60,8 @@ export default function EditListing() {
       id: listingState.listingById?.id,
       address: data.get("address")!.toString(),
       pricePerNight: parseFloat(data.get("pricePerNight")!.toString()),
+      latitude: parseFloat(data.get("latitude")!.toString()),
+      longitude: parseFloat(data.get("longitude")!.toString()),
       listingName: data.get("listingName")!.toString(),
       description: data.get("description")!.toString(),
       images: listingState.listingById?.images ?? [],
@@ -125,6 +129,27 @@ export default function EditListing() {
                 label="Address"
                 defaultValue={listingState.listingById?.address}
               />
+
+              {/* <MapPicker locationChanged={(location: LatLng) => {}} /> */}
+
+              <TextField
+                required
+                id="latitude"
+                name="latitude"
+                label="Latitude"
+                type="number"
+                defaultValue={listingState.listingById?.latitude}
+              />
+
+              <TextField
+                required
+                id="longitude"
+                name="longitude"
+                label="Longitude"
+                type="number"
+                defaultValue={listingState.listingById?.longitude}
+              />
+
               <TextField
                 required
                 id="Price Per Night"
