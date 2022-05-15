@@ -7,12 +7,14 @@ import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
 
-import { Link as RouterLink } from "react-router-dom"
+import { Link as RouterLink, useNavigate } from "react-router-dom"
 import { useAppDispatch } from "../redux/hooks"
 import { logout } from "../redux/reducers/userSlice"
+import { Forum } from "@mui/icons-material"
 
 export default function NavAppBar() {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -33,7 +35,9 @@ export default function NavAppBar() {
             </Button>
             <Typography fontFamily="monospace">SIX LEGS</Typography>
           </Box>
-
+          <IconButton onClick={() => navigate("/inbox")}>
+            <Forum></Forum>
+          </IconButton>
           <Button component={RouterLink} to="/profile" color="inherit">
             Profile
           </Button>
