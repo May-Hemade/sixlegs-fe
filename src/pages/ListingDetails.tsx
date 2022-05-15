@@ -262,8 +262,7 @@ function ListingDetails() {
                       src={listingState.listingById?.owner?.avatar}
                     />
                     <Typography component="span" variant="body2" sx={{ ml: 2 }}>
-                      {listingState.listingById?.owner?.firstName}
-                      {listingState.listingById?.owner?.lastName}
+                      {`${listingState.listingById?.owner?.firstName} ${listingState.listingById?.owner?.lastName}`}
                     </Typography>
                     <ChatButton user={listingState.listingById!.owner!} />
                   </Box>
