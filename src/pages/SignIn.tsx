@@ -15,6 +15,8 @@ import Container from "@mui/material/Container"
 import { FaGoogle } from "react-icons/fa"
 import { useAppDispatch } from "../redux/hooks"
 import { saveToken, setProfile } from "../redux/reducers/userSlice"
+import AppSnackbar from "../components/AppSnackbar"
+import { showErrorSnackbar } from "../redux/reducers/snackbarSlice"
 
 function Copyright(props: any) {
   return (
@@ -57,7 +59,7 @@ export default function SignIn() {
         headers: { "Content-type": "application/json" },
       })
       if (!res.ok) {
-        alert("you you entered wrong password or email")
+        dispatch(showErrorSnackbar("You entered wrong password or email"))
       } else {
         let result = await res.json()
 
@@ -65,16 +67,18 @@ export default function SignIn() {
         dispatch(setProfile(result.profile))
 
         navigate("/")
-        console.log("Successfully logged in!")
       }
     } catch (error) {
-      console.log(error)
+      dispatch(showErrorSnackbar("Login failed"))
     }
   }
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+
+      <AppSnackbar />
+
       <Box
         sx={{
           marginTop: 8,

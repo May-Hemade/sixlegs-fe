@@ -4,8 +4,8 @@ import Box from "@mui/material/Box"
 import StarIcon from "@mui/icons-material/Star"
 
 const labels: { [index: string]: string } = {
-  1: "Useless+",
-  2: "Poor+",
+  1: "😭",
+  2: "😞",
   3: "😐",
   4: "😄",
   5: "😍",

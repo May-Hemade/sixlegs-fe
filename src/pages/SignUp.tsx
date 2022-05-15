@@ -14,6 +14,9 @@ import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { FaGoogle } from "react-icons/fa"
 import { Divider } from "@mui/material"
+import { useAppDispatch } from "../redux/hooks"
+import { showErrorSnackbar } from "../redux/reducers/snackbarSlice"
+import AppSnackbar from "../components/AppSnackbar"
 
 function Copyright(props: any) {
   return (
@@ -34,6 +37,7 @@ function Copyright(props: any) {
 
 export default function SignUp() {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
@@ -59,21 +63,22 @@ export default function SignUp() {
         headers: { "Content-type": "application/json" },
       })
       if (res.status !== 200) {
-        alert("you you entered wrong password or email")
+        dispatch(showErrorSnackbar("Registration failed"))
       }
       if (res.ok) {
-        let data = await res.json()
-        console.log("Successfully registered!")
         navigate("/signin")
       }
     } catch (error) {
-      console.log(error)
+      dispatch(showErrorSnackbar("Registration failed"))
     }
   }
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+
+      <AppSnackbar />
+
       <Box
         sx={{
           marginTop: 8,

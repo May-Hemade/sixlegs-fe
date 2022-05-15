@@ -106,17 +106,13 @@ function ListingBookings() {
                     key={booking.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <Button
-                      component={RouterLink}
-                      to="/profile"
-                      color="inherit"
-                      sx={{ p: 0 }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {booking.owner.firstName} {booking.owner.lastName}
-                        <ChatButton user={booking.owner} />
-                      </TableCell>
-                    </Button>
+                    <TableCell component="th" scope="row">
+                      <Typography component="span">
+                        {booking.owner.firstName} {booking.owner.lastName}{" "}
+                      </Typography>
+
+                      <ChatButton user={booking.owner} />
+                    </TableCell>
                     <TableCell align="right">
                       {format(new Date(booking.checkInDate), "EEE d MMM yyyy")}
                     </TableCell>

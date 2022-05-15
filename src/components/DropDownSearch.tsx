@@ -37,11 +37,11 @@ export default function DropDownSearch() {
       renderInput={(params) => (
         <TextField
           required
+          autoComplete="off"
           {...params}
           label="Destination"
           inputProps={{
             ...params.inputProps,
-            autoComplete: "new-password",
           }}
         />
       )}
