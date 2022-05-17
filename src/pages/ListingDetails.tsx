@@ -230,11 +230,13 @@ function ListingDetails() {
                     <Grid item xs={6}>
                       <Stack spacing={2} sx={{ mt: 3 }}>
                         <Box>
-                          <HoverRating
-                            showLabel={false}
-                            value={5}
-                            readOnly={true}
-                          />
+                          {listingState.listingById?.rating && (
+                            <HoverRating
+                              showLabel={false}
+                              value={listingState.listingById.rating}
+                              readOnly={true}
+                            />
+                          )}
                         </Box>
                         <Box>
                           <Typography variant="overline" gutterBottom>

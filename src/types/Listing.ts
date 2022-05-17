@@ -14,4 +14,5 @@ export default interface Listing {
   owner?: User
   bookings?: Booking[]
   images?: ListingImage[]
+  rating?: number
 }

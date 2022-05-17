@@ -75,12 +75,14 @@ export default function PersonalListing(props: SingleListingProps) {
             {props.listing.listingName}
           </Typography>
 
-          <HoverRating
-            showLabel={false}
-            value={getRandomArbitrary(1, 5)}
-            readOnly={true}
-            size="small"
-          />
+          {props.listing.rating && (
+            <HoverRating
+              showLabel={false}
+              value={props.listing.rating}
+              readOnly={true}
+              size="small"
+            />
+          )}
         </Box>
         <Stack direction="row" spacing={4} sx={{ mt: 2 }}>
           <Box>
